@@ -1,27 +1,62 @@
+import { useEffect } from 'react'
 import i18next from 'i18next'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import Logo from '@/assets/icons/logo.svg'
 import CustomForm, { useForm } from '@/components/form/form'
 import { InputField } from '@/components/input-field/input-field'
 import Button from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { FormField } from '@/components/ui/form'
+import { routes } from '@/constants/routes'
+import { useAuthMutation } from '@/redux/api/auth'
+import { ErrorInterface } from '@/types/interface'
+import { setCookieValue } from '@/utils/cookie'
 
 const authSchema = z.object({
-    email: z.string().email(i18next.t('error.email.format')),
+    phone: z.string().min(10, i18next.t('error.required')),
     password: z.string().min(1, i18next.t('error.required')),
     remember_me: z.boolean(),
 })
 
 export default function AuthPage() {
     const { t } = useTranslation()
+    const navigate = useNavigate()
 
     const form = useForm({
         schema: authSchema,
-        defaultValues: { email: '', password: '', remember_me: false },
+        defaultValues: { phone: '', password: '', remember_me: false },
     })
 
-    const onSubmit = () => {}
+    const [authUser, { data, error, isSuccess, isLoading }] = useAuthMutation()
+
+    const onSubmit = (authData: z.infer<typeof authSchema>) => {
+        authUser({
+            phone: `${authData.phone}`,
+            password: authData.password,
+        })
+    }
+
+    useEffect(() => {
+        if (isSuccess) {
+            setCookieValue('accessToken', data.accessToken!)
+            setCookieValue('refreshToken', data.refreshToken!)
+
+            navigate(routes.CATEGORIES)
+        }
+    }, [isSuccess])
+
+    useEffect(() => {
+        if (error) {
+            const errorData = error as ErrorInterface
+            form.setError('password', {
+                message: errorData.data?.message
+                    ? errorData.data?.message
+                    : t('error.default'),
+            })
+        }
+    }, [error])
 
     return (
         <div className="flex w-screen h-screen items-center mobile:justify-center select-none">
@@ -41,10 +76,10 @@ export default function AuthPage() {
                 <CustomForm className="w-full" form={form} onSubmit={onSubmit}>
                     <FormField
                         control={form.control}
-                        name="email"
+                        name="phone"
                         render={({ field }) => (
                             <InputField
-                                label="Email"
+                                label={t('phone')}
                                 className="mt-8"
                                 inputClassName="h-14"
                                 {...field}
@@ -63,6 +98,27 @@ export default function AuthPage() {
                             />
                         )}
                     />
+                    <div className="flex items-center justify-between mt-6">
+                        <FormField
+                            control={form.control}
+                            name="remember_me"
+                            render={({ field }) => (
+                                <Checkbox
+                                    label={t('remember.me')}
+                                    id="remember_me"
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                            )}
+                        />
+                        <Button
+                            variant="ghost"
+                            className="h-auto py-0"
+                            type="button"
+                        >
+                            {t('forgot.password')}
+                        </Button>
+                    </div>
                     <Button size="lg" className="w-full mt-8">
                         {t('action.sign.in')}
                     </Button>

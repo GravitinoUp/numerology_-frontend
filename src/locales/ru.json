@@ -8,8 +8,13 @@
         "sign.in": "Войти"
     },
     "error": {
+        "default": "Произошла ошибка, повторите попытку позднее",
         "required": "Поле должно быть заполнено",
         "email.format": "Неверный формат Email"
     },
-    "password": "Пароль"
+    "phone": "Номер телефона",
+    "password": "Пароль",
+    "remember.me": "Запомнить меня",
+    "forgot.password": "Забыли пароль?",
+    "date.format": "dd.MM.yyyy"
 }
