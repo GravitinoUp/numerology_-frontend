@@ -29,7 +29,7 @@ export default function AuthPage() {
         defaultValues: { phone: '', password: '', remember_me: false },
     })
 
-    const [authUser, { data, error, isSuccess, isLoading }] = useAuthMutation()
+    const [authUser, { data, error, isSuccess }] = useAuthMutation()
 
     const onSubmit = (authData: z.infer<typeof authSchema>) => {
         authUser({

@@ -33,7 +33,7 @@ function App() {
 
     useEffect(() => {
         if (error) {
-            navigate(routes.CATEGORIES)
+            navigate(routes.AUTH_PAGE)
         }
     }, [error])
 

@@ -10,11 +10,21 @@
     "error": {
         "default": "Произошла ошибка, повторите попытку позднее",
         "required": "Поле должно быть заполнено",
-        "email.format": "Неверный формат Email"
+        "email.format": "Неверный формат Email",
+        "nothing.found": "Ничего не найдено"
     },
     "phone": "Номер телефона",
     "password": "Пароль",
     "remember.me": "Запомнить меня",
     "forgot.password": "Забыли пароль?",
-    "date.format": "dd.MM.yyyy"
+    "date.format": "dd.MM.yyyy",
+    "placeholder": {
+        "search": "Поиск"
+    },
+    "pagination": {
+        "first.page": "Первая страница",
+        "last.page": "Последняя страница",
+        "previous.page": "предыдущая страница",
+        "next.page": "Следующая страница"
+    }
 }
