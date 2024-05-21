@@ -11,6 +11,11 @@ const numbersApi = api.injectEndpoints({
                 url: `number/${type}?query=${query}`,
             }),
         }),
+        getNumbersBySection: builder.query<ResultInterface[], string>({
+            query: (section) => ({
+                url: `number/${section}`,
+            }),
+        }),
         getSingleNumber: builder.query<
             ResultInterface,
             { type: PageType; query?: string | number }
@@ -44,6 +49,7 @@ const numbersApi = api.injectEndpoints({
 
 export const {
     useGetNumbersQuery,
+    useGetNumbersBySectionQuery,
     useGetSingleNumberQuery,
     useGetFateCardQuery,
     useGetLuckyNumbersQuery,

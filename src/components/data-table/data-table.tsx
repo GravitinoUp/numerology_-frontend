@@ -17,6 +17,7 @@ import { getCellAlignment, getCellTextColor } from './get-cell-class'
 import CustomTableHead from './table-head'
 import { TablePagination } from './table-pagination'
 import { DebouncedInput } from '../search-input'
+import { ScrollArea, ScrollBar } from '../ui/scroll-area'
 import {
     Select,
     SelectContent,
@@ -75,6 +76,7 @@ function DataTable<TData, TValue>({
     paginationInfo,
     isLoading,
     stickyHeader,
+    scrollClassName = 'h-[700px]',
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation()
     const [rowSelection, setRowSelection] = useState({})
@@ -95,13 +97,18 @@ function DataTable<TData, TValue>({
                           const isId = cell.column.id.includes('id')
                           const isSelect = cell.column.id === 'select'
                           if (isActions || isId) {
-                              return <Skeleton className="h-6 w-6" />
+                              return (
+                                  <div className="flex justify-end gap-2">
+                                      <Skeleton className="h-10 w-10 rounded-full" />
+                                      <Skeleton className="h-10 w-10 rounded-full" />
+                                  </div>
+                              )
                           }
 
                           return (
                               <Skeleton
                                   className={
-                                      isSelect ? 'h-4 w-4' : 'h-6 w-[100px]'
+                                      isSelect ? 'h-4 w-4' : 'h-6 w-[120px]'
                                   }
                               />
                           )
@@ -192,74 +199,83 @@ function DataTable<TData, TValue>({
                     </SelectContent>
                 </Select>
             </div>
-            <Table>
-                <TableHeader
-                    className={cn(
-                        'bg-secondary border-t',
-                        !isLoading && stickyHeader && 'sticky top-0'
-                    )}
-                >
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                                <CustomTableHead
-                                    key={header.id}
-                                    header={header}
-                                />
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>
-                    {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row) => (
-                            <TableRow
-                                key={row.id}
-                                data-state={row.getIsSelected() && 'selected'}
-                                onClick={(e) => {
-                                    const clickedColumnId = (
-                                        e.target as HTMLTableRowElement
-                                    ).getAttribute('data-column-id')
-
-                                    if (
-                                        typeof onRowClick !== 'undefined' &&
-                                        clickedColumnId !== null &&
-                                        !isLoading
-                                    ) {
-                                        onRowClick(row.original)
-                                    }
-                                }}
-                            >
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell
-                                        key={cell.id}
-                                        className={cn(
-                                            'text-[15px]',
-                                            getCellTextColor(cell.column.id),
-                                            getCellAlignment(cell.column.id)
-                                        )}
-                                        data-column-id={cell.column.id}
-                                    >
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
-                                    </TableCell>
+            <ScrollArea
+                className={cn('w-full', stickyHeader && scrollClassName)}
+            >
+                <Table>
+                    <TableHeader
+                        className={cn(
+                            'bg-secondary border-t',
+                            !isLoading && stickyHeader && 'sticky top-0'
+                        )}
+                    >
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => (
+                                    <CustomTableHead
+                                        key={header.id}
+                                        header={header}
+                                    />
                                 ))}
                             </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                            <TableCell
-                                colSpan={columns.length}
-                                className="h-24 text-center"
-                            >
-                                {t('error.nothing.found')}
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {table.getRowModel().rows?.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={
+                                        row.getIsSelected() && 'selected'
+                                    }
+                                    onClick={(e) => {
+                                        const clickedColumnId = (
+                                            e.target as HTMLTableRowElement
+                                        ).getAttribute('data-column-id')
+
+                                        if (
+                                            typeof onRowClick !== 'undefined' &&
+                                            clickedColumnId !== null &&
+                                            !isLoading
+                                        ) {
+                                            onRowClick(row.original)
+                                        }
+                                    }}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell
+                                            key={cell.id}
+                                            className={cn(
+                                                'text-[15px]',
+                                                getCellTextColor(
+                                                    cell.column.id
+                                                ),
+                                                getCellAlignment(cell.column.id)
+                                            )}
+                                            data-column-id={cell.column.id}
+                                        >
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center"
+                                >
+                                    {t('error.nothing.found')}
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+                <ScrollBar orientation="horizontal" />
+            </ScrollArea>
             {table.getRowModel().rows?.length > 0 && (
                 <TablePagination table={table} pagination={paginationInfo} />
             )}

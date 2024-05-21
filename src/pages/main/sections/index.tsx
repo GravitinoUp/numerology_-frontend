@@ -1,34 +1,35 @@
 import { t } from 'i18next'
-import { useNavigate } from 'react-router-dom'
-import { categoryColumns } from './category-columns'
+import { useNavigate, useParams } from 'react-router-dom'
+import { sectionColumns } from './section-columns'
 import DataTable from '@/components/data-table/data-table'
 import ErrorLayout from '@/components/error-layout/error-layout'
 import { PageLayout } from '@/components/layout/page-layout'
 import { routes } from '@/constants/routes'
-import { useGetCategoriesQuery } from '@/redux/api/pages'
+import { useGetPagesByCategoryQuery } from '@/redux/api/pages'
 
-export default function CategoriesPage() {
+export default function SectionsPage() {
+    const { category } = useParams()
     const navigate = useNavigate()
 
     const {
-        data: categories = [],
+        data: sections = [],
         isFetching,
         error,
         refetch,
-    } = useGetCategoriesQuery()
+    } = useGetPagesByCategoryQuery(Number(category))
 
     return !error ? (
-        <PageLayout title={t('page.categories')}>
+        <PageLayout title={t('page.sections')} backButtonEnabled>
             <DataTable
-                columns={categoryColumns}
-                data={categories}
+                columns={sectionColumns}
+                data={sections}
                 onRowClick={(data) =>
                     navigate(
-                        `${routes.CATEGORIES}/${data.category_id}/sections`
+                        `${routes.CATEGORIES}/${category}/sections/${data.page_uuid}`
                     )
                 }
                 paginationInfo={{
-                    itemCount: categories.length,
+                    itemCount: sections.length,
                     pageSize: 999,
                     pageIndex: 0,
                 }}

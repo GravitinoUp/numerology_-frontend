@@ -2,8 +2,8 @@ import { Table } from '@tanstack/react-table'
 import {
     ChevronFirstIcon,
     ChevronLastIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
+    LucideArrowLeft,
+    LucideArrowRight,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Button from '../ui/button'
@@ -25,118 +25,112 @@ export function TablePagination<TData>({
             : [0]
 
     return (
-        <div className="w-full flex items-center justify-between px-2 mt-6">
-            <div className="w-full flex items-center justify-end space-x-6 lg:space-x-8">
-                <div className="flex items-center space-x-2">
-                    <Button
-                        variant="ghost"
-                        className="hidden h-8 w-8 p-0 lg:flex bg-pagination text-primary"
-                        onClick={() => table?.setPageIndex(0)}
-                        disabled={pagination.pageIndex === 0}
-                    >
-                        <span className="sr-only">
-                            {t('pagination.first.page')}
-                        </span>
-                        <ChevronFirstIcon className="h-4 w-4" />
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        className="h-8 w-8 p-0 bg-pagination text-primary"
-                        onClick={() =>
-                            table?.setPageIndex(pagination.pageIndex - 1)
-                        }
-                        disabled={pagination.pageIndex === 0}
-                    >
-                        <span className="sr-only">
-                            {t('pagination.previous.page')}
-                        </span>
-                        <ChevronLeftIcon className="h-4 w-4" />
-                    </Button>
-                    {totalPagesCount &&
-                        totalPagesCount.map((page) => {
-                            const currentPage = pagination.pageIndex
-                            const isCurrentPage = currentPage === page
+        <div className="w-full flex items-center justify-between border-t p-4">
+            <Button
+                variant="outline"
+                className="hidden px-2 lg:flex text-primary"
+                onClick={() => table?.setPageIndex(0)}
+                disabled={pagination.pageIndex === 0}
+            >
+                <ChevronFirstIcon className="h-6 w-6 mr-2" />
+                <p className="font-semibold text-foreground">
+                    {t('pagination.first.page')}
+                </p>
+            </Button>
+            <div className="flex gap-1">
+                <Button
+                    variant="outline"
+                    className="hidden px-2 lg:flex text-primary mr-2"
+                    onClick={() =>
+                        table?.setPageIndex(pagination.pageIndex - 1)
+                    }
+                    disabled={pagination.pageIndex === 0}
+                >
+                    <LucideArrowLeft className="h-6 w-6 mr-2" />
+                    <p className="font-semibold text-foreground">
+                        {t('pagination.previous.page')}
+                    </p>
+                </Button>
+                {totalPagesCount &&
+                    totalPagesCount.map((page) => {
+                        const currentPage = pagination.pageIndex
+                        const isCurrentPage = currentPage === page
 
-                            const isVisible =
-                                page === 0 || // First
-                                page === totalPagesCount.length - 1 || // Last
-                                (currentPage !== 0 &&
-                                    page === currentPage - 1) || // Previous
-                                page === currentPage || // Current
-                                (currentPage !== totalPagesCount.length - 1 &&
-                                    page === currentPage + 1) || // Next
-                                (currentPage < 3 && page === currentPage + 2) ||
-                                (currentPage < 2 && page === currentPage + 3) ||
-                                (currentPage === 0 &&
-                                    page === currentPage + 4) ||
-                                (currentPage > totalPagesCount.length - 4 &&
-                                    page === currentPage - 2) ||
-                                (currentPage > totalPagesCount.length - 3 &&
-                                    page === currentPage - 3) ||
-                                (currentPage === totalPagesCount.length - 1 &&
-                                    page === currentPage - 4)
+                        const isVisible =
+                            page === 0 || // First
+                            page === totalPagesCount.length - 1 || // Last
+                            (currentPage !== 0 && page === currentPage - 1) || // Previous
+                            page === currentPage || // Current
+                            (currentPage !== totalPagesCount.length - 1 &&
+                                page === currentPage + 1) || // Next
+                            (currentPage < 3 && page === currentPage + 2) ||
+                            (currentPage < 2 && page === currentPage + 3) ||
+                            (currentPage === 0 && page === currentPage + 4) ||
+                            (currentPage > totalPagesCount.length - 4 &&
+                                page === currentPage - 2) ||
+                            (currentPage > totalPagesCount.length - 3 &&
+                                page === currentPage - 3) ||
+                            (currentPage === totalPagesCount.length - 1 &&
+                                page === currentPage - 4)
 
-                            const isDotVisible =
-                                (currentPage < 3 && page === currentPage + 5) ||
-                                page === currentPage - 2 ||
-                                page === currentPage + 2 ||
-                                (currentPage > totalPagesCount.length - 4 &&
-                                    page === currentPage - 5)
+                        const isDotVisible =
+                            (currentPage < 3 && page === currentPage + 5) ||
+                            page === currentPage - 2 ||
+                            page === currentPage + 2 ||
+                            (currentPage > totalPagesCount.length - 4 &&
+                                page === currentPage - 5)
 
-                            return isVisible || totalPagesCount.length < 9 ? (
+                        return isVisible || totalPagesCount.length < 9 ? (
+                            <Button
+                                key={page}
+                                variant="ghost"
+                                className={cn(
+                                    'h-10 w-10 font-normal rounded-lg',
+                                    isCurrentPage && 'bg-muted font-medium'
+                                )}
+                                onClick={() => table?.setPageIndex(page)}
+                            >
+                                {page + 1}
+                            </Button>
+                        ) : (
+                            isDotVisible && (
                                 <Button
                                     key={page}
                                     variant="ghost"
-                                    className={cn(
-                                        'h-8 w-8 p-0 font-normal',
-                                        isCurrentPage && 'bg-primary text-white'
-                                    )}
-                                    onClick={() => table?.setPageIndex(page)}
+                                    className="h-10 w-10 font-normal rounded-lg"
                                 >
-                                    {page + 1}
+                                    ...
                                 </Button>
-                            ) : (
-                                isDotVisible && (
-                                    <Button
-                                        key={page}
-                                        variant="ghost"
-                                        className="h-8 w-8 p-0 font-normal"
-                                    >
-                                        ...
-                                    </Button>
-                                )
                             )
-                        })}
-                    <Button
-                        variant="ghost"
-                        className="h-8 w-8 p-0 bg-pagination text-primary"
-                        onClick={() =>
-                            table?.setPageIndex(pagination.pageIndex + 1)
-                        }
-                        disabled={
-                            pagination.pageIndex === totalPagesCount.length - 1
-                        }
-                    >
-                        <span className="sr-only">
-                            {t('pagination.next.page')}
-                        </span>
-                        <ChevronRightIcon className="h-4 w-4" />
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        className="hidden h-8 w-8 p-0 lg:flex bg-pagination text-primary"
-                        onClick={() =>
-                            table?.setPageIndex(totalPagesCount.length - 1)
-                        }
-                        disabled={!table?.getCanNextPage()}
-                    >
-                        <span className="sr-only">
-                            {t('pagination.last.page')}
-                        </span>
-                        <ChevronLastIcon className="h-4 w-4" />
-                    </Button>
-                </div>
+                        )
+                    })}
+                <Button
+                    variant="outline"
+                    className="hidden px-2 lg:flex text-primary ml-2"
+                    onClick={() =>
+                        table?.setPageIndex(pagination.pageIndex + 1)
+                    }
+                    disabled={
+                        pagination.pageIndex === totalPagesCount.length - 1
+                    }
+                >
+                    <p className="font-semibold text-foreground">
+                        {t('pagination.next.page')}
+                    </p>
+                    <LucideArrowRight className="h-6 w-6 ml-2" />
+                </Button>
             </div>
+            <Button
+                variant="outline"
+                className="hidden px-2 lg:flex text-primary"
+                onClick={() => table?.setPageIndex(totalPagesCount.length - 1)}
+                disabled={!table?.getCanNextPage()}
+            >
+                <p className="font-semibold text-foreground">
+                    {t('pagination.last.page')}
+                </p>
+                <ChevronLastIcon className="h-6 w-6 ml-2" />
+            </Button>
         </div>
     )
 }

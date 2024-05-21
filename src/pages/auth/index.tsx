@@ -29,7 +29,7 @@ export default function AuthPage() {
         defaultValues: { phone: '', password: '', remember_me: false },
     })
 
-    const [authUser, { data, error, isSuccess }] = useAuthMutation()
+    const [authUser, { data, error, isSuccess, isLoading }] = useAuthMutation()
 
     const onSubmit = (authData: z.infer<typeof authSchema>) => {
         authUser({
@@ -119,7 +119,11 @@ export default function AuthPage() {
                             {t('forgot.password')}
                         </Button>
                     </div>
-                    <Button size="lg" className="w-full mt-8">
+                    <Button
+                        size="lg"
+                        className="w-full mt-8"
+                        loading={isLoading}
+                    >
                         {t('action.sign.in')}
                     </Button>
                 </CustomForm>

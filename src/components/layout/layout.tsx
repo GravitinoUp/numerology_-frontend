@@ -14,7 +14,7 @@ export function Layout({ children }: { children?: ReactNode }) {
                 </div>
             </div>
 
-            <div>
+            <div className="grid col-2">
                 <Header />
                 <div className="bg-[#F8F8F8] items-start flex place-items-start justify-start row-2 overflow-visible overflow-y-auto">
                     <Outlet />

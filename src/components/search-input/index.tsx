@@ -37,18 +37,16 @@ export const DebouncedInput: React.FC<Props> = ({
 
     return (
         <div className="flex items-center justify-start w-full h-11 bg-muted border border-solid rounded-xl overflow-hidden">
-            <div className="ml-3 mr-3">
+            <div className="mx-3">
                 <SearchIcon />
             </div>
-            <div className="flex-auto ">
-                <input
-                    className="w-full focus:outline-none bg-transparent"
-                    {...props}
-                    value={value}
-                    onChange={handleInputChange}
-                    placeholder={placeholder}
-                />
-            </div>
+            <input
+                className="w-full h-11 focus:outline-none bg-transparent"
+                {...props}
+                value={value}
+                onChange={handleInputChange}
+                placeholder={placeholder}
+            />
         </div>
     )
 }
