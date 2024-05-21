@@ -40,7 +40,7 @@ export function TablePagination<TData>({
             <div className="flex gap-1">
                 <Button
                     variant="outline"
-                    className="hidden px-2 lg:flex text-primary mr-2"
+                    className="px-2 text-primary mr-2"
                     onClick={() =>
                         table?.setPageIndex(pagination.pageIndex - 1)
                     }
@@ -106,7 +106,7 @@ export function TablePagination<TData>({
                     })}
                 <Button
                     variant="outline"
-                    className="hidden px-2 lg:flex text-primary ml-2"
+                    className="px-2 text-primary ml-2"
                     onClick={() =>
                         table?.setPageIndex(pagination.pageIndex + 1)
                     }

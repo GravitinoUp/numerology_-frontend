@@ -1,16 +1,18 @@
-import { ChevronLeftIcon, Plus } from 'lucide-react'
+import { ChevronLeftIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../ui/button'
 
 interface PageLayoutProps {
     title?: string
     backButtonEnabled?: boolean
+    actionButton?: React.ReactNode
     children?: React.ReactNode
 }
 
 export function PageLayout({
     title,
     backButtonEnabled = false,
+    actionButton,
     children,
 }: PageLayoutProps) {
     const navigate = useNavigate()
@@ -29,9 +31,7 @@ export function PageLayout({
                     </Button>
                 )}
                 <h1 className="text-2xl font-bold">{title}</h1>
-                <Button type="button" size="icon">
-                    <Plus />
-                </Button>
+                {actionButton}
             </div>
             <div className="w-full h-[1px] bg-black/10" />
             {children}

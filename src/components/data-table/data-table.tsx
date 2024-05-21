@@ -18,13 +18,6 @@ import CustomTableHead from './table-head'
 import { TablePagination } from './table-pagination'
 import { DebouncedInput } from '../search-input'
 import { ScrollArea, ScrollBar } from '../ui/scroll-area'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '../ui/select'
 import { Skeleton } from '../ui/skeleton'
 import {
     Table,
@@ -35,7 +28,7 @@ import {
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 
-const ITEMS_PER_PAGE_LIST = [10, 20, 30, 40, 50]
+//const ITEMS_PER_PAGE_LIST = [10, 20, 30, 40, 50]
 const SKELETON_ITEMS_COUNT = 10
 
 type CustomColumnDef<TData, TValue = unknown> = {
@@ -181,7 +174,7 @@ function DataTable<TData, TValue>({
                     suffixIconClick={searchSuffixIconClick}
                     filtersEnabled={filtersEnabled}
                 />
-                <Select
+                {/* <Select
                     value={String(paginationInfo.pageSize)}
                     onValueChange={(value) => {
                         table?.setPageSize(Number(value))
@@ -197,7 +190,7 @@ function DataTable<TData, TValue>({
                             </SelectItem>
                         ))}
                     </SelectContent>
-                </Select>
+                </Select> */}
             </div>
             <ScrollArea
                 className={cn('w-full', stickyHeader && scrollClassName)}
