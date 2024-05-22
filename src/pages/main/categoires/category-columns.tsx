@@ -17,7 +17,7 @@ export const categoryColumns: ColumnDef<CategoryInterface>[] = [
                     src={`${import.meta.env.VITE_API}${
                         row.original.category_image
                     }`}
-                    className="w-10 h-10 rounded-full"
+                    className="w-10 h-10 rounded-full object-cover"
                 />
                 <p className="font-medium">{row.original.category_name}</p>
             </div>

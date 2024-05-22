@@ -13,8 +13,8 @@ import { cn } from '@/lib/utils'
 const dialogVariants = cva('', {
     variants: {
         size: {
-            default: 'sm:max-w-[450px] p-3 pt-0',
-            md: 'sm:max-w-[600px] pt-0',
+            default: 'sm:max-w-[450px] p-0',
+            md: 'sm:max-w-[600px] p-0',
             lg: 'sm:max-w-[1100px]',
         },
     },
@@ -51,7 +51,11 @@ const DialogWindow = ({
             className={cn(dialogVariants({ size }), className)}
             onOpenAutoFocus={(e) => e.preventDefault}
         >
-            <DialogHeader className="mt-3">{header}</DialogHeader>
+            <DialogHeader
+                className={cn('mt-3', size !== 'md' ? 'px-3' : 'px-6')}
+            >
+                {header}
+            </DialogHeader>
             {content}
         </DialogContent>
     </Dialog>

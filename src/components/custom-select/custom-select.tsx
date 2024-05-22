@@ -53,7 +53,7 @@ const CustomSelect = ({
                     role="combobox"
                     aria-expanded={popoverOpen}
                     className={cn(
-                        'flex w-full justify-between rounded-xl min-h-11 h-auto text-left whitespace-normal [&>span]:line-clamp-1',
+                        'flex w-full justify-between rounded-xl min-h-[46px] h-auto text-left whitespace-normal [&>span]:line-clamp-1',
                         className
                     )}
                 >

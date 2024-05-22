@@ -18,7 +18,7 @@ export default function ConfirmForm({
     const { t } = useTranslation()
 
     return (
-        <div>
+        <div className="px-3 pb-3">
             <p>{description}</p>
             <div className="flex justify-end mt-8 gap-4">
                 <Button

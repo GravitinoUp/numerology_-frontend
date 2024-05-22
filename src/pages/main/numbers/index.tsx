@@ -7,22 +7,22 @@ import { PageLayout } from '@/components/layout/page-layout'
 import { useGetNumbersBySectionQuery } from '@/redux/api/numbers'
 
 export default function NumbersPage() {
-    const { section } = useParams()
+    const { type } = useParams()
 
     const {
-        data: sections = [],
+        data: numbers = [],
         isFetching,
         error,
         refetch,
-    } = useGetNumbersBySectionQuery(section!)
+    } = useGetNumbersBySectionQuery(type!)
 
     return !error ? (
-        <PageLayout title={t('page.sections')} backButtonEnabled>
+        <PageLayout title={t('page.numbers')} backButtonEnabled>
             <DataTable
                 columns={numberColumns}
-                data={[]}
+                data={numbers}
                 paginationInfo={{
-                    itemCount: sections.length,
+                    itemCount: numbers.length,
                     pageSize: 999,
                     pageIndex: 0,
                 }}

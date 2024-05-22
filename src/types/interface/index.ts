@@ -15,3 +15,14 @@ export interface FetchResultInterface<T = void> {
     status: boolean
     data?: T
 }
+
+export interface FileData {
+    id: string
+    fileURL?: string
+    file?: File
+}
+
+export interface LocalizationInterface<T> {
+    ru: T
+    en: T
+}

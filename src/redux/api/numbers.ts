@@ -1,5 +1,10 @@
 import { api } from '.'
-import { ResultInterface, PageType } from '@/types/interface/numbers'
+import { FetchResultInterface } from '@/types/interface'
+import {
+    ResultInterface,
+    PageType,
+    ResultPayloadInterface,
+} from '@/types/interface/numbers'
 
 const numbersApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -12,9 +17,10 @@ const numbersApi = api.injectEndpoints({
             }),
         }),
         getNumbersBySection: builder.query<ResultInterface[], string>({
-            query: (section) => ({
-                url: `number/${section}`,
+            query: (type) => ({
+                url: `formula-result/all/${type}`,
             }),
+            providesTags: ['Numbers'],
         }),
         getSingleNumber: builder.query<
             ResultInterface,
@@ -44,6 +50,17 @@ const numbersApi = api.injectEndpoints({
                 body,
             }),
         }),
+        updateResult: builder.mutation<
+            FetchResultInterface,
+            ResultPayloadInterface
+        >({
+            query: (body) => ({
+                url: 'formula-result',
+                method: 'PATCH',
+                body,
+            }),
+            invalidatesTags: ['Numbers'],
+        }),
     }),
 })
 
@@ -54,4 +71,5 @@ export const {
     useGetFateCardQuery,
     useGetLuckyNumbersQuery,
     useGetCompatibilityQuery,
+    useUpdateResultMutation,
 } = numbersApi

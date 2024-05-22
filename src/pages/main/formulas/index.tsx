@@ -1,35 +1,35 @@
 import { t } from 'i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import { sectionColumns } from './section-columns'
+import { formulaColumns } from './formula-columns'
 import DataTable from '@/components/data-table/data-table'
 import ErrorLayout from '@/components/error-layout/error-layout'
 import { PageLayout } from '@/components/layout/page-layout'
 import { routes } from '@/constants/routes'
-import { useGetPagesByCategoryQuery } from '@/redux/api/pages'
+import { useGetFormulasBySectionQuery } from '@/redux/api/pages'
 
-export default function SectionsPage() {
-    const { category } = useParams()
+export default function FormulasPage() {
+    const { category, section } = useParams()
     const navigate = useNavigate()
 
     const {
-        data: sections = [],
+        data: formulas = [],
         isFetching,
         error,
         refetch,
-    } = useGetPagesByCategoryQuery(Number(category))
+    } = useGetFormulasBySectionQuery(section!)
 
     return !error ? (
-        <PageLayout title={t('page.sections')} backButtonEnabled>
+        <PageLayout title={t('page.formulas')} backButtonEnabled>
             <DataTable
-                columns={sectionColumns}
-                data={sections}
+                columns={formulaColumns}
+                data={formulas}
                 onRowClick={(data) =>
                     navigate(
-                        `${routes.CATEGORIES}/${category}/sections/${data.key}`
+                        `${routes.CATEGORIES}/${category}/sections/${data.formula_type_key}/${data.formula_type_id}`
                     )
                 }
                 paginationInfo={{
-                    itemCount: sections.length,
+                    itemCount: formulas.length,
                     pageSize: 999,
                     pageIndex: 0,
                 }}

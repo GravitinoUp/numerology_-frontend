@@ -3,7 +3,8 @@ export const routes = {
     AUTH_PAGE: '/signin',
     CATEGORIES: '/categories',
     SECTIONS: '/categories/:category/sections',
-    NUMBERS: '/categories/:category/sections/:section',
+    FORMULAS: '/categories/:category/sections/:section',
+    NUMBERS: '/categories/:category/sections/:section/:type',
     USERS: '/users',
     SETTINGS: '/settings',
 }

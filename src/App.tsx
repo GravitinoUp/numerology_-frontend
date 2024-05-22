@@ -5,6 +5,7 @@ import { PageLoader } from './components/loaders/page-loader'
 import { routes } from './constants/routes'
 import AuthPage from './pages/auth'
 import CategoriesPage from './pages/main/categoires'
+import FormulasPage from './pages/main/formulas'
 import NumbersPage from './pages/main/numbers'
 import SectionsPage from './pages/main/sections'
 import { useRefreshTokenMutation } from './redux/api/auth'
@@ -48,6 +49,7 @@ function App() {
                         element={<CategoriesPage />}
                     />
                     <Route path={routes.SECTIONS} element={<SectionsPage />} />
+                    <Route path={routes.FORMULAS} element={<FormulasPage />} />
                     <Route path={routes.NUMBERS} element={<NumbersPage />} />
                 </Route>
                 <Route path={routes.AUTH_PAGE} element={<AuthPage />} />
