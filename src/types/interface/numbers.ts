@@ -20,8 +20,8 @@ export interface ResultPayloadInterface {
 
 export interface FormulaTypeInterface {
     formula_type_id: number
-    formula_type_name: string
-    formula_type_description: string
+    formula_type_name: LocalizationInterface<string>
+    formula_type_description: LocalizationInterface<string>
     formula_type_key: string
 }
 

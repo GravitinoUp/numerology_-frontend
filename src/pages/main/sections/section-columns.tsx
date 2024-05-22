@@ -16,7 +16,14 @@ export const sectionColumns: ColumnDef<PageInterface>[] = [
                     }`}
                     className="w-10 h-10 rounded-full object-cover"
                 />
-                <p className="font-medium">{row.original.page_name}</p>
+                <div data-column-id="page_name">
+                    <p data-column-id="page_name" className="font-medium">
+                        {row.original.page_name.en}
+                    </p>
+                    <p data-column-id="page_name" className="font-medium">
+                        {row.original.page_name.ru}
+                    </p>
+                </div>
             </div>
         ),
     },

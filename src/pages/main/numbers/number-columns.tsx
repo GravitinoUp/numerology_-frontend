@@ -12,15 +12,17 @@ export const numberColumns: ColumnDef<ResultInterface>[] = [
         header: i18next.t('name'),
         accessorKey: 'result_name',
         cell: ({ row }) => (
-            <div data-column-id="page_name" className="flex gap-3 items-center">
+            <div className="flex gap-3 items-center">
                 <img
-                    data-column-id="page_name"
                     src={`${import.meta.env.VITE_API}${
                         row.original.result_image
                     }`}
                     className="w-10 h-10 rounded-full object-cover"
                 />
-                <p className="font-medium">{row.original.result_name}</p>
+                <div>
+                    <p className="font-medium">{row.original.result_name.en}</p>
+                    <p className="font-medium">{row.original.result_name.ru}</p>
+                </div>
             </div>
         ),
     },
@@ -29,8 +31,11 @@ export const numberColumns: ColumnDef<ResultInterface>[] = [
         accessorKey: 'result_content',
         cell: ({ row }) => (
             <div className="max-w-[300px]">
-                <p className="text-wrap break-words line-clamp-2">
-                    {row.original.result_content}
+                <p className="text-wrap break-words line-clamp-1">
+                    {row.original.result_content.en}
+                </p>
+                <p className="text-wrap break-words line-clamp-1">
+                    {row.original.result_content.ru}
                 </p>
             </div>
         ),

@@ -19,7 +19,14 @@ export const categoryColumns: ColumnDef<CategoryInterface>[] = [
                     }`}
                     className="w-10 h-10 rounded-full object-cover"
                 />
-                <p className="font-medium">{row.original.category_name}</p>
+                <div>
+                    <p data-column-id="category_name" className="font-medium">
+                        {row.original.category_name.en}
+                    </p>
+                    <p data-column-id="category_name" className="font-medium">
+                        {row.original.category_name.ru}
+                    </p>
+                </div>
             </div>
         ),
     },

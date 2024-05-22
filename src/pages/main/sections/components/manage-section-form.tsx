@@ -6,6 +6,7 @@ import { ImageInput } from '@/components/image-input/image-input'
 import { InputField } from '@/components/input-field/input-field'
 import Button from '@/components/ui/button'
 import { FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Textarea } from '@/components/ui/textarea'
 import { useErrorToast } from '@/hooks/use-error-toast'
 import { useSuccessToast } from '@/hooks/use-success-toast'
@@ -144,75 +145,82 @@ export default function ManageSectionForm({ section, setOpen }: FormProps) {
 
     return (
         <CustomForm form={form} onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-4">
-                <FormField
-                    control={form.control}
-                    name="section_name_ru"
-                    render={({ field }) => (
-                        <InputField
-                            label={`RU: ${t('name')}`}
-                            isRequired
-                            {...field}
-                        />
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="section_name_en"
-                    render={({ field }) => (
-                        <InputField
-                            label={`EN: ${t('name')}`}
-                            isRequired
-                            {...field}
-                        />
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="section_description_ru"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>{`RU: ${t('content')}`}</FormLabel>
-                            <Textarea {...field} />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="section_description_en"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>{`EN: ${t('content')}`}</FormLabel>
-                            <Textarea {...field} />
-                        </FormItem>
-                    )}
-                />
-                <FormItem>
-                    <FormLabel className="mb-2">{t('section.image')}</FormLabel>
-                    <ImageInput
-                        selectedFile={selectedFile}
-                        setSelectedFile={setSelectedFile}
+            <ScrollArea className="h-[710px] px-6" responsiveHeight>
+                <div className="flex flex-col gap-4">
+                    <FormField
+                        control={form.control}
+                        name="section_name_en"
+                        render={({ field }) => (
+                            <InputField
+                                label={`EN: ${t('name')}`}
+                                isRequired
+                                {...field}
+                            />
+                        )}
                     />
-                </FormItem>
-                <div className="flex mt-8 mb-6 gap-4">
-                    <Button
-                        className="w-full h-11"
-                        loading={filesUploading || sectionUpdating}
-                    >
-                        <p className="font-semibold">
-                            {section ? t('action.save') : t('action.add')}
-                        </p>
-                    </Button>
-                    <Button
-                        className="w-full h-11"
-                        variant="outline"
-                        type="button"
-                        onClick={() => setOpen(false)}
-                    >
-                        <p className="font-semibold">{t('action.cancel')}</p>
-                    </Button>
+                    <FormField
+                        control={form.control}
+                        name="section_name_ru"
+                        render={({ field }) => (
+                            <InputField
+                                label={`RU: ${t('name')}`}
+                                isRequired
+                                {...field}
+                            />
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="section_description_en"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>{`EN: ${t('content')}`}</FormLabel>
+                                <Textarea {...field} />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="section_description_ru"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>{`RU: ${t('content')}`}</FormLabel>
+                                <Textarea {...field} />
+                            </FormItem>
+                        )}
+                    />
+                    <FormItem>
+                        <FormLabel className="mb-2">
+                            {t('section.image')}
+                        </FormLabel>
+                        <ImageInput
+                            selectedFile={selectedFile}
+                            setSelectedFile={setSelectedFile}
+                        />
+                    </FormItem>
+                    <div className="flex mt-8 mb-6 gap-4">
+                        <Button
+                            className="w-full h-11"
+                            loading={filesUploading || sectionUpdating}
+                        >
+                            <p className="font-semibold">
+                                {section ? t('action.save') : t('action.add')}
+                            </p>
+                        </Button>
+                        <Button
+                            className="w-full h-11"
+                            variant="outline"
+                            type="button"
+                            onClick={() => setOpen(false)}
+                        >
+                            <p className="font-semibold">
+                                {t('action.cancel')}
+                            </p>
+                        </Button>
+                    </div>
                 </div>
-            </div>
+                <ScrollBar />
+            </ScrollArea>
         </CustomForm>
     )
 }

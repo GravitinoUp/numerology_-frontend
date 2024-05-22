@@ -145,19 +145,8 @@ export default function ManageCategoryForm({ category, setOpen }: FormProps) {
 
     return (
         <CustomForm form={form} onSubmit={handleSubmit}>
-            <ScrollArea className="h-[700px] px-6">
+            <ScrollArea className="h-[700px] px-6" responsiveHeight>
                 <div className="flex flex-col gap-4">
-                    <FormField
-                        control={form.control}
-                        name="category_name_ru"
-                        render={({ field }) => (
-                            <InputField
-                                label={`RU: ${t('name')}`}
-                                isRequired
-                                {...field}
-                            />
-                        )}
-                    />
                     <FormField
                         control={form.control}
                         name="category_name_en"
@@ -171,12 +160,13 @@ export default function ManageCategoryForm({ category, setOpen }: FormProps) {
                     />
                     <FormField
                         control={form.control}
-                        name="category_description_ru"
+                        name="category_name_ru"
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>{`RU: ${t('content')}`}</FormLabel>
-                                <Textarea {...field} />
-                            </FormItem>
+                            <InputField
+                                label={`RU: ${t('name')}`}
+                                isRequired
+                                {...field}
+                            />
                         )}
                     />
                     <FormField
@@ -185,6 +175,16 @@ export default function ManageCategoryForm({ category, setOpen }: FormProps) {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>{`EN: ${t('content')}`}</FormLabel>
+                                <Textarea {...field} />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="category_description_ru"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>{`RU: ${t('content')}`}</FormLabel>
                                 <Textarea {...field} />
                             </FormItem>
                         )}

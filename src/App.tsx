@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { Layout } from './components/layout/layout'
 import { PageLoader } from './components/loaders/page-loader'
 import { routes } from './constants/routes'
@@ -13,6 +13,7 @@ import { getJWTtokens, setCookieValue } from './utils/cookie'
 
 function App() {
     const navigate = useNavigate()
+    const path = useLocation()
 
     const [fetchRefresh, { data: newAccessToken, error, isSuccess }] =
         useRefreshTokenMutation()
@@ -30,7 +31,10 @@ function App() {
     useEffect(() => {
         if (isSuccess) {
             setCookieValue('accessToken', newAccessToken)
-            navigate(routes.CATEGORIES)
+
+            if (path.pathname === routes.AUTH_PAGE) {
+                navigate(routes.CATEGORIES)
+            }
         }
     }, [isSuccess])
 

@@ -18,7 +18,7 @@ const numbersApi = api.injectEndpoints({
         }),
         getNumbersBySection: builder.query<ResultInterface[], string>({
             query: (type) => ({
-                url: `formula-result/all/${type}`,
+                url: `formula-result/all/${type}?format_names=false`,
             }),
             providesTags: ['Numbers'],
         }),

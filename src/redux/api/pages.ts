@@ -12,7 +12,7 @@ const pagesApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getCategories: builder.query<CategoryInterface[], void>({
             query: () => ({
-                url: 'category/all',
+                url: 'category/all?format_names=false',
             }),
             providesTags: ['Categories'],
         }),
@@ -29,13 +29,13 @@ const pagesApi = api.injectEndpoints({
         }),
         getPages: builder.query<PageInterface[], void>({
             query: () => ({
-                url: 'page/all',
+                url: 'page/all?format_names=false',
             }),
             providesTags: ['Sections'],
         }),
         getPagesByCategory: builder.query<PageInterface[], number>({
             query: (category: number) => ({
-                url: `page/all/${category}`,
+                url: `page/all/${category}?format_names=false`,
             }),
             providesTags: ['Sections'],
         }),
@@ -52,7 +52,7 @@ const pagesApi = api.injectEndpoints({
         }),
         getFormulasBySection: builder.query<FormulaTypeInterface[], string>({
             query: (section) => ({
-                url: `formula-type/all/${section}`,
+                url: `formula-type/all/${section}?format_names=false`,
             }),
         }),
         uploadFiles: builder.mutation<
