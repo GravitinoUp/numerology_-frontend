@@ -37,7 +37,9 @@ export function PageLayout({
                 {actionButton}
             </div>
             <div className="w-full h-[1px] bg-black/10" />
-            <div className={cn('flex w-full py-6', className)}>{children}</div>
+            <div className={cn('flex w-full h-full py-6', className)}>
+                {children}
+            </div>
         </div>
     )
 }

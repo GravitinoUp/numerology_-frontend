@@ -23,11 +23,7 @@ export default function FormulasPage() {
     } = useGetFormulasBySectionQuery(section!)
 
     return !error ? (
-        <PageLayout
-            className="h-full"
-            title={t('page.formulas')}
-            backButtonEnabled
-        >
+        <PageLayout title={t('page.formulas')} backButtonEnabled>
             <DataTable
                 columns={formulaColumns}
                 data={formulas}

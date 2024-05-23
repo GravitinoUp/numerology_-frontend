@@ -23,11 +23,7 @@ export default function SectionsPage() {
     } = useGetPagesByCategoryQuery(Number(category))
 
     return !error ? (
-        <PageLayout
-            className="h-full"
-            title={t('page.sections')}
-            backButtonEnabled
-        >
+        <PageLayout title={t('page.sections')} backButtonEnabled>
             <DataTable
                 columns={sectionColumns}
                 data={sections}

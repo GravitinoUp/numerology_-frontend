@@ -22,7 +22,7 @@ export default function CategoriesPage() {
     } = useGetCategoriesQuery()
 
     return !error ? (
-        <PageLayout className="h-full" title={t('page.categories')}>
+        <PageLayout title={t('page.categories')}>
             <DataTable
                 columns={categoryColumns}
                 data={categories}
