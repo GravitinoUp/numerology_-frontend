@@ -18,7 +18,7 @@ export default function SettingsPage() {
 
     return !error ? (
         <PageLayout title={t('page.settings')} className="h-full">
-            <div className="flex flex-col w-full h-full rounded-xl border bg-background">
+            <div className="flex flex-col w-full h-full rounded-2xl border bg-background">
                 {successLoad && (
                     <Fragment>
                         <SettingsField label={t('user.fio')}>
