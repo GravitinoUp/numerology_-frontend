@@ -8,6 +8,8 @@ import CategoriesPage from './pages/main/categoires'
 import FormulasPage from './pages/main/formulas'
 import NumbersPage from './pages/main/numbers'
 import SectionsPage from './pages/main/sections'
+import SettingsPage from './pages/settings'
+import UsersPage from './pages/users'
 import { useRefreshTokenMutation } from './redux/api/auth'
 import { getJWTtokens, setCookieValue } from './utils/cookie'
 
@@ -32,7 +34,7 @@ function App() {
         if (isSuccess) {
             setCookieValue('accessToken', newAccessToken)
 
-            if (path.pathname === routes.AUTH_PAGE) {
+            if (path.pathname === routes.AUTH_PAGE || path.pathname === '/') {
                 navigate(routes.CATEGORIES)
             }
         }
@@ -55,6 +57,8 @@ function App() {
                     <Route path={routes.SECTIONS} element={<SectionsPage />} />
                     <Route path={routes.FORMULAS} element={<FormulasPage />} />
                     <Route path={routes.NUMBERS} element={<NumbersPage />} />
+                    <Route path={routes.USERS} element={<UsersPage />} />
+                    <Route path={routes.SETTINGS} element={<SettingsPage />} />
                 </Route>
                 <Route path={routes.AUTH_PAGE} element={<AuthPage />} />
             </Routes>

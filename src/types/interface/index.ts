@@ -11,6 +11,11 @@ export interface ErrorDataInterface {
     statusCode: number
 }
 
+export interface FetchDataInterface<T> {
+    count: number
+    data: T
+}
+
 export interface FetchResultInterface<T = void> {
     status: boolean
     data?: T

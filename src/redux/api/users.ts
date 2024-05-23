@@ -1,19 +1,32 @@
 import { api } from '.'
-import { FetchResultInterface } from '@/types/interface'
+import { FetchDataInterface, FetchResultInterface } from '@/types/interface'
+import { PayloadInterface } from '@/types/interface/query'
 import {
     UpdateUserPayloadInterface,
     UserInterface,
     UserPayloadInterface,
+    UserSortInterface,
 } from '@/types/interface/users'
 
 const usersApi = api.injectEndpoints({
     endpoints: (builder) => ({
+        getUsers: builder.query<
+            FetchDataInterface<UserInterface[]>,
+            PayloadInterface<UserInterface, UserSortInterface>
+        >({
+            query: (body) => ({
+                url: 'users/all',
+                method: 'POST',
+                body,
+            }),
+            providesTags: ['Users'],
+        }),
         getCurrentUser: builder.query<UserInterface, void>({
             query: () => ({
                 url: 'users',
                 method: 'GET',
             }),
-            providesTags: ['User'],
+            providesTags: ['Users'],
         }),
         createUser: builder.mutation<
             FetchResultInterface,
@@ -34,7 +47,7 @@ const usersApi = api.injectEndpoints({
                 method: 'PATCH',
                 body,
             }),
-            invalidatesTags: ['User'],
+            invalidatesTags: ['Users'],
         }),
         checkUserExists: builder.mutation<
             FetchResultInterface,
@@ -46,12 +59,25 @@ const usersApi = api.injectEndpoints({
                 body,
             }),
         }),
+        changeUserStatus: builder.mutation<
+            FetchResultInterface,
+            Partial<UserInterface>
+        >({
+            query: (body) => ({
+                url: 'users/change_status',
+                method: 'PATCH',
+                body,
+            }),
+            invalidatesTags: ['Users'],
+        }),
     }),
 })
 
 export const {
+    useGetUsersQuery,
     useGetCurrentUserQuery,
     useCreateUserMutation,
     useUpdateUserMutation,
     useCheckUserExistsMutation,
+    useChangeUserStatusMutation,
 } = usersApi

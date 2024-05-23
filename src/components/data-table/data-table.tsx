@@ -6,6 +6,7 @@ import {
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
+    getPaginationRowModel,
     getSortedRowModel,
     SortingState,
     useReactTable,
@@ -18,6 +19,13 @@ import CustomTableHead from './table-head'
 import { TablePagination } from './table-pagination'
 import { DebouncedInput } from '../search-input'
 import { ScrollArea, ScrollBar } from '../ui/scroll-area'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '../ui/select'
 import { Skeleton } from '../ui/skeleton'
 import {
     Table,
@@ -28,8 +36,8 @@ import {
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 
-//const ITEMS_PER_PAGE_LIST = [10, 20, 30, 40, 50]
-const SKELETON_ITEMS_COUNT = 10
+const ITEMS_PER_PAGE_LIST = [10, 20, 30, 40, 50]
+const CELL_HEIGHT = 'h-[81px]'
 
 type CustomColumnDef<TData, TValue = unknown> = {
     accessorKey?: string
@@ -54,6 +62,7 @@ interface DataTableProps<TData, TValue> {
     isLoading?: boolean
     stickyHeader?: boolean
     scrollClassName?: string
+    manualFilters?: boolean
 }
 
 function DataTable<TData, TValue>({
@@ -70,6 +79,7 @@ function DataTable<TData, TValue>({
     isLoading,
     stickyHeader,
     scrollClassName = 'h-[700px]',
+    manualFilters = true,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation()
     const [rowSelection, setRowSelection] = useState({})
@@ -77,8 +87,8 @@ function DataTable<TData, TValue>({
     const [globalFilter, setGlobalFilter] = useState('')
 
     const tableData = useMemo(
-        () => (isLoading ? Array(SKELETON_ITEMS_COUNT).fill({}) : data),
-        [isLoading, data]
+        () => (isLoading ? Array(paginationInfo.pageSize).fill({}) : data),
+        [paginationInfo.pageSize, isLoading, data]
     )
     const tableColumns = useMemo(
         () =>
@@ -91,7 +101,12 @@ function DataTable<TData, TValue>({
                           const isSelect = cell.column.id === 'select'
                           if (isActions || isId) {
                               return (
-                                  <div className="flex justify-end gap-2">
+                                  <div
+                                      className={cn(
+                                          'flex justify-end gap-2',
+                                          CELL_HEIGHT
+                                      )}
+                                  >
                                       <Skeleton className="h-10 w-10 rounded-full" />
                                       <Skeleton className="h-10 w-10 rounded-full" />
                                   </div>
@@ -114,31 +129,39 @@ function DataTable<TData, TValue>({
     const table = useReactTable({
         data: tableData,
         columns: tableColumns,
-        state: {
-            columnFilters,
-            columnVisibility,
-            rowSelection,
-        },
+        state: manualFilters
+            ? {
+                  columnFilters,
+                  columnVisibility,
+                  rowSelection,
+              }
+            : {
+                  columnVisibility,
+                  rowSelection,
+              },
         initialState: {
             pagination: {
                 pageIndex: paginationInfo.pageIndex,
                 pageSize: paginationInfo.pageSize,
             },
         },
-        manualPagination: true,
-        manualSorting: true,
-        manualFiltering: true,
+        manualPagination: manualFilters,
+        manualSorting: manualFilters,
+        manualFiltering: manualFilters,
         pageCount: Math.ceil(
             paginationInfo.itemCount / paginationInfo.pageSize
         ),
         onColumnFiltersChange: setColumnFilters,
         onRowSelectionChange: setRowSelection,
+        getPaginationRowModel: getPaginationRowModel(),
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
     })
 
     useEffect(() => {
+        console.log(table.getState().pagination.pageSize)
+
         getTableInfo(
             table.getState().pagination.pageSize,
             table.getState().pagination.pageIndex,
@@ -163,7 +186,7 @@ function DataTable<TData, TValue>({
         <div
             className={cn(
                 hasBackground &&
-                    'bg-white rounded-2xl mt-4 flex flex-wrap items-center justify-start w-full border'
+                    'bg-white rounded-2xl flex flex-wrap items-center justify-start w-full border'
             )}
         >
             <div className="flex w-full px-6 py-3 gap-4">
@@ -174,7 +197,7 @@ function DataTable<TData, TValue>({
                     suffixIconClick={searchSuffixIconClick}
                     filtersEnabled={filtersEnabled}
                 />
-                {/* <Select
+                <Select
                     value={String(paginationInfo.pageSize)}
                     onValueChange={(value) => {
                         table?.setPageSize(Number(value))
@@ -190,7 +213,7 @@ function DataTable<TData, TValue>({
                             </SelectItem>
                         ))}
                     </SelectContent>
-                </Select> */}
+                </Select>
             </div>
             <ScrollArea
                 className={cn('w-full', stickyHeader && scrollClassName)}
@@ -240,6 +263,7 @@ function DataTable<TData, TValue>({
                                             key={cell.id}
                                             className={cn(
                                                 'text-[15px]',
+                                                CELL_HEIGHT,
                                                 getCellTextColor(
                                                     cell.column.id
                                                 ),

@@ -33,3 +33,16 @@ export const formatTime = (date?: string | Date | null) => {
     const newDate = new Date(date)
     return format(newDate, `HH:mm`)
 }
+
+export const formatName = (
+    lastName: string,
+    firstName: string,
+    patronymic: string
+) => {
+    const str = `${lastName} ${firstName} ${patronymic}`
+
+    return str
+        .split(/\s+/)
+        .map((w, i) => (i && w ? w.substring(0, 1).toUpperCase() + '.' : w))
+        .join(' ')
+}

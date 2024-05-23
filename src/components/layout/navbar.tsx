@@ -1,4 +1,5 @@
 import NavbarLink from './navbar-link'
+import Watermark from '../watermark/watermark'
 import DashboardIcon from '@/assets/icons/dashboard.svg'
 import Logo from '@/assets/icons/logo.svg'
 import SettingsIcon from '@/assets/icons/settings.svg'
@@ -33,7 +34,7 @@ export function Navbar() {
     return (
         <nav className="bg-white flex flex-col items-center border-solid h-screen pt-3 shadow-xl">
             <Logo />
-            <ul className="flex flex-col w-full mt-20 px-4 gap-2">
+            <ul className="flex flex-col w-full h-full mt-20 px-4 gap-2">
                 {links.map((item, key) => {
                     if (!item) {
                         return void 0
@@ -49,6 +50,8 @@ export function Navbar() {
                         </li>
                     )
                 })}
+                <div className="flex-auto" />
+                <Watermark />
             </ul>
         </nav>
     )

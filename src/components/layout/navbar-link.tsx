@@ -10,7 +10,7 @@ type NavbarLinkProps = {
 
 const NavbarLink = ({ path, title, children }: NavbarLinkProps) => {
     const { pathname } = useLocation()
-    const isOnCurrentPath = path === pathname
+    const isOnCurrentPath = pathname.includes(path)
 
     if (isOnCurrentPath) {
         document.title = title

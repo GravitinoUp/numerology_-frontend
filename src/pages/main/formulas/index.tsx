@@ -1,15 +1,19 @@
+import { useState } from 'react'
 import { t } from 'i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { formulaColumns } from './formula-columns'
 import DataTable from '@/components/data-table/data-table'
 import ErrorLayout from '@/components/error-layout/error-layout'
 import { PageLayout } from '@/components/layout/page-layout'
+import { defaultQuery } from '@/constants'
 import { routes } from '@/constants/routes'
 import { useGetFormulasBySectionQuery } from '@/redux/api/pages'
 
 export default function FormulasPage() {
     const { category, section } = useParams()
     const navigate = useNavigate()
+
+    const [formulasQuery, setFormulasQuery] = useState(defaultQuery)
 
     const {
         data: formulas = [],
@@ -30,10 +34,20 @@ export default function FormulasPage() {
                 }
                 paginationInfo={{
                     itemCount: formulas.length,
-                    pageSize: 999,
-                    pageIndex: 0,
+                    pageSize: formulasQuery.offset.count,
+                    pageIndex: formulasQuery.offset.page - 1,
+                }}
+                getTableInfo={(pageSize, pageIndex) => {
+                    setFormulasQuery({
+                        ...formulasQuery,
+                        offset: {
+                            count: pageSize,
+                            page: pageIndex + 1,
+                        },
+                    })
                 }}
                 isLoading={isFetching}
+                manualFilters={false}
             />
         </PageLayout>
     ) : (

@@ -1,3 +1,5 @@
+import { SortOptionsType } from './query'
+
 export interface UserInterface {
     user_uuid: string
     is_active: boolean
@@ -5,6 +7,15 @@ export interface UserInterface {
     phone: string
     role: RoleInterface
     person: PersonInterface
+}
+
+export interface UserSortInterface {
+    user_uuid: SortOptionsType
+    person_uuid: SortOptionsType
+    role_id: SortOptionsType
+    is_active: SortOptionsType
+    email: SortOptionsType
+    phone: SortOptionsType
 }
 
 interface RoleInterface {

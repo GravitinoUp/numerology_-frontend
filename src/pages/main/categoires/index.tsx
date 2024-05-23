@@ -1,16 +1,18 @@
+import { useState } from 'react'
 import { t } from 'i18next'
 import { useNavigate } from 'react-router-dom'
 import { categoryColumns } from './category-columns'
 import DataTable from '@/components/data-table/data-table'
 import ErrorLayout from '@/components/error-layout/error-layout'
 import { PageLayout } from '@/components/layout/page-layout'
+import { defaultQuery } from '@/constants'
 import { routes } from '@/constants/routes'
 import { useGetCategoriesQuery } from '@/redux/api/pages'
 
 export default function CategoriesPage() {
     const navigate = useNavigate()
 
-    //const [open, setOpen] = useState(false)
+    const [categoriesQuery, setCategoriesQuery] = useState(defaultQuery)
 
     const {
         data: categories = [],
@@ -20,22 +22,7 @@ export default function CategoriesPage() {
     } = useGetCategoriesQuery()
 
     return !error ? (
-        <PageLayout
-            title={t('page.categories')}
-            // actionButton={
-            //     <DialogWindow
-            //         size="md"
-            //         open={open}
-            //         setOpen={setOpen}
-            //         header={
-            //             <h1 className="text-xl font-bold">
-            //                 {t('create.category')}
-            //             </h1>
-            //         }
-            //         content={<ManageCategoryForm setOpen={setOpen} />}
-            //     />
-            // }
-        >
+        <PageLayout title={t('page.categories')}>
             <DataTable
                 columns={categoryColumns}
                 data={categories}
@@ -46,10 +33,20 @@ export default function CategoriesPage() {
                 }
                 paginationInfo={{
                     itemCount: categories.length,
-                    pageSize: 999,
-                    pageIndex: 0,
+                    pageSize: categoriesQuery.offset.count,
+                    pageIndex: categoriesQuery.offset.page - 1,
+                }}
+                getTableInfo={(pageSize, pageIndex) => {
+                    setCategoriesQuery({
+                        ...categoriesQuery,
+                        offset: {
+                            count: pageSize,
+                            page: pageIndex + 1,
+                        },
+                    })
                 }}
                 isLoading={isFetching}
+                manualFilters={false}
             />
         </PageLayout>
     ) : (
