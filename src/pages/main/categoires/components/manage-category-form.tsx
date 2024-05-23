@@ -116,14 +116,6 @@ export default function ManageCategoryForm({ category, setOpen }: FormProps) {
         }
     }
 
-    const createSuccessMessage = useMemo(
-        () =>
-            t('success.create.f', {
-                type: t('category'),
-            }),
-        []
-    )
-
     const updateSuccessMessage = useMemo(
         () =>
             t('success.update.f', {
@@ -134,12 +126,10 @@ export default function ManageCategoryForm({ category, setOpen }: FormProps) {
 
     useEffect(() => {
         if (uploadSuccess) {
-            console.log(uploadedFiles)
             handleManage()
         }
     }, [uploadSuccess])
 
-    useSuccessToast(createSuccessMessage, false, setOpen)
     useSuccessToast(updateSuccessMessage, updateSuccess, setOpen)
     useErrorToast(void 0, uploadError || updateError)
 

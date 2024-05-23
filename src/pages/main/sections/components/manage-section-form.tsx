@@ -116,14 +116,6 @@ export default function ManageSectionForm({ section, setOpen }: FormProps) {
         }
     }
 
-    const createSuccessMessage = useMemo(
-        () =>
-            t('success.create.m', {
-                type: t('section'),
-            }),
-        []
-    )
-
     const updateSuccessMessage = useMemo(
         () =>
             t('success.update.m', {
@@ -139,7 +131,6 @@ export default function ManageSectionForm({ section, setOpen }: FormProps) {
         }
     }, [uploadSuccess])
 
-    useSuccessToast(createSuccessMessage, false, setOpen)
     useSuccessToast(updateSuccessMessage, updateSuccess, setOpen)
     useErrorToast(void 0, uploadError || updateError)
 

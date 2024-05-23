@@ -64,7 +64,7 @@ const usersApi = api.injectEndpoints({
             Partial<UserInterface>
         >({
             query: (body) => ({
-                url: 'users/change_status',
+                url: 'users/status',
                 method: 'PATCH',
                 body,
             }),

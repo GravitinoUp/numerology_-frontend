@@ -13,7 +13,6 @@ export default function UsersPage() {
 
     const {
         data: users = { count: 0, data: [] },
-        isFetching,
         error,
         refetch,
     } = useGetUsersQuery(usersQuery)
@@ -81,7 +80,6 @@ export default function UsersPage() {
                     pageSize: usersQuery.offset.count,
                     pageIndex: usersQuery.offset.page - 1,
                 }}
-                isLoading={isFetching}
             />
         </PageLayout>
     ) : (

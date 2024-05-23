@@ -103,22 +103,22 @@ function DataTable<TData, TValue>({
                               return (
                                   <div
                                       className={cn(
-                                          'flex justify-end gap-2',
-                                          CELL_HEIGHT
+                                          'flex items-center justify-end gap-2 h-12'
                                       )}
                                   >
-                                      <Skeleton className="h-10 w-10 rounded-full" />
                                       <Skeleton className="h-10 w-10 rounded-full" />
                                   </div>
                               )
                           }
 
                           return (
-                              <Skeleton
-                                  className={
-                                      isSelect ? 'h-4 w-4' : 'h-6 w-[120px]'
-                                  }
-                              />
+                              <div className="flex items-center h-12">
+                                  <Skeleton
+                                      className={
+                                          isSelect ? 'h-4 w-4' : 'h-6 w-[120px]'
+                                      }
+                                  />
+                              </div>
                           )
                       },
                   }))

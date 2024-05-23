@@ -3,8 +3,11 @@ import { useToast } from '@/components/ui/use-toast.ts'
 
 const SUCCESS_DURATION = 1500
 
-export const useSuccessToast = (successMsg: string, isSuccess: boolean,
-    setDialogOpen?: Dispatch<SetStateAction<boolean>>) => {
+export const useSuccessToast = (
+    successMsg: string,
+    isSuccess: boolean,
+    setDialogOpen?: Dispatch<SetStateAction<boolean>>
+) => {
     const { toast } = useToast()
 
     useEffect(() => {

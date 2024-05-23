@@ -15,7 +15,6 @@ export default function NumbersPage() {
 
     const {
         data: numbers = [],
-        isFetching,
         error,
         refetch,
     } = useGetNumbersBySectionQuery(type!)
@@ -39,7 +38,6 @@ export default function NumbersPage() {
                         },
                     })
                 }}
-                isLoading={isFetching}
                 manualFilters={false}
             />
         </PageLayout>

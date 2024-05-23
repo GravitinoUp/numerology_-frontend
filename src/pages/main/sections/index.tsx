@@ -17,7 +17,6 @@ export default function SectionsPage() {
 
     const {
         data: sections = [],
-        isFetching,
         error,
         refetch,
     } = useGetPagesByCategoryQuery(Number(category))
@@ -46,7 +45,6 @@ export default function SectionsPage() {
                         },
                     })
                 }}
-                isLoading={isFetching}
                 manualFilters={false}
             />
         </PageLayout>

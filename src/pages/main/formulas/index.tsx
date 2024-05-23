@@ -17,7 +17,6 @@ export default function FormulasPage() {
 
     const {
         data: formulas = [],
-        isFetching,
         error,
         refetch,
     } = useGetFormulasBySectionQuery(section!)
@@ -46,7 +45,6 @@ export default function FormulasPage() {
                         },
                     })
                 }}
-                isLoading={isFetching}
                 manualFilters={false}
             />
         </PageLayout>

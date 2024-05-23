@@ -14,12 +14,7 @@ export default function CategoriesPage() {
 
     const [categoriesQuery, setCategoriesQuery] = useState(defaultQuery)
 
-    const {
-        data: categories = [],
-        isFetching,
-        error,
-        refetch,
-    } = useGetCategoriesQuery()
+    const { data: categories = [], error, refetch } = useGetCategoriesQuery()
 
     return !error ? (
         <PageLayout title={t('page.categories')}>
@@ -45,7 +40,6 @@ export default function CategoriesPage() {
                         },
                     })
                 }}
-                isLoading={isFetching}
                 manualFilters={false}
             />
         </PageLayout>
