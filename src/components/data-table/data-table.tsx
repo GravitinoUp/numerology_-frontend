@@ -78,7 +78,7 @@ function DataTable<TData, TValue>({
     paginationInfo,
     isLoading,
     stickyHeader,
-    scrollClassName = 'h-[700px]',
+    scrollClassName = 'h-[500px]',
     manualFilters = true,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation()
@@ -186,10 +186,10 @@ function DataTable<TData, TValue>({
         <div
             className={cn(
                 hasBackground &&
-                    'bg-white rounded-2xl flex flex-wrap items-center justify-start w-full border'
+                    'bg-white rounded-2xl flex flex-col items-center justify-start w-full border'
             )}
         >
-            <div className="flex w-full px-6 py-3 gap-4">
+            <div className="flex flex-initial w-full px-6 py-3 gap-4">
                 <DebouncedInput
                     value={globalFilter ?? ''}
                     placeholder={searchPlaceholder}
@@ -216,7 +216,10 @@ function DataTable<TData, TValue>({
                 </Select>
             </div>
             <ScrollArea
-                className={cn('w-full', stickyHeader && scrollClassName)}
+                className={cn(
+                    'w-full flex-auto',
+                    stickyHeader && scrollClassName
+                )}
             >
                 <Table>
                     <TableHeader
@@ -236,7 +239,7 @@ function DataTable<TData, TValue>({
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="flex-auto">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow

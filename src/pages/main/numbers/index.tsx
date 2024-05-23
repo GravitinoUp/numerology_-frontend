@@ -21,7 +21,11 @@ export default function NumbersPage() {
     } = useGetNumbersBySectionQuery(type!)
 
     return !error ? (
-        <PageLayout title={t('page.numbers')} backButtonEnabled>
+        <PageLayout
+            className="h-full"
+            title={t('page.numbers')}
+            backButtonEnabled
+        >
             <DataTable
                 columns={numberColumns}
                 data={numbers}
