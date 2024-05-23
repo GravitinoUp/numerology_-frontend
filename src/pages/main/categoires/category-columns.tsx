@@ -1,4 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table'
+import StatusCard from '@/components/status-card/status-card'
 import i18next from '@/i18n'
 import TableActions from '@/pages/main/categoires/table-actions'
 import { CategoryInterface } from '@/types/interface/pages'
@@ -31,8 +32,9 @@ export const categoryColumns: ColumnDef<CategoryInterface>[] = [
         ),
     },
     {
-        header: i18next.t('status'),
+        header: i18next.t('status.title'),
         accessorKey: 'is_active',
+        cell: () => <StatusCard status={true} />,
     },
     {
         header: i18next.t('position'),

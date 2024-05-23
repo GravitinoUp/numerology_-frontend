@@ -1,6 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import i18next from 'i18next'
 import TableActions from './table-actions'
+import StatusCard from '@/components/status-card/status-card'
 import { PageInterface } from '@/types/interface/pages'
 
 export const sectionColumns: ColumnDef<PageInterface>[] = [
@@ -28,8 +29,9 @@ export const sectionColumns: ColumnDef<PageInterface>[] = [
         ),
     },
     {
-        header: i18next.t('status'),
+        header: i18next.t('status.title'),
         accessorKey: 'is_active',
+        cell: () => <StatusCard status={true} />,
     },
     {
         header: i18next.t('position'),

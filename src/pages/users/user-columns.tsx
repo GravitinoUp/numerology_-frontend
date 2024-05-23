@@ -1,6 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import i18next from 'i18next'
 import UserSwitch from './user-switch'
+import StatusCard from '@/components/status-card/status-card'
 
 export interface FormattedUserInterface {
     user_uuid: string
@@ -23,8 +24,13 @@ export const userColumns: ColumnDef<FormattedUserInterface>[] = [
         accessorKey: 'role',
     },
     {
-        header: i18next.t('status'),
+        header: i18next.t('status.title'),
         accessorKey: 'is_active',
-        cell: ({ row }) => <UserSwitch user={row.original} />,
+        cell: ({ row }) => (
+            <div className="flex gap-4 items-center">
+                <StatusCard status={row.original.is_active} />
+                <UserSwitch user={row.original} />
+            </div>
+        ),
     },
 ]

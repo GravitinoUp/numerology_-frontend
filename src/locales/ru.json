@@ -66,13 +66,18 @@
     "result.image": "Изображение трактовки",
     "name": "Название",
     "content": "Описание",
-    "status": "Статус",
+
     "position": "Позиция",
     "section": "Раздел",
     "result": "Трактовка",
     "uuid": "UUID",
     "key": "Ключ",
     "all": "Все",
+    "status": {
+        "title": "Статус",
+        "active": "Активный",
+        "inactive": "Неактивный"
+    },
     "create": {
         "category": "Создание категории",
         "section": "Создание раздела",

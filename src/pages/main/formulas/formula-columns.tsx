@@ -22,7 +22,7 @@ export const formulaColumns: ColumnDef<FormulaTypeInterface>[] = [
         ),
     },
     {
-        header: i18next.t('status'),
+        header: i18next.t('content'),
         accessorKey: 'formula_type_description',
         cell: ({ row }) => (
             <div data-column-id="formula_type_description">
