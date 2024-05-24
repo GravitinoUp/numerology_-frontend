@@ -1,0 +1,62 @@
+name: Frontend Build and Deploy
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Clone frontend repository
+        run: git clone https://${{ secrets.TRIGGER }}@github.com/GravitinoUp/numerology_frontend.git -b ${{ github.ref_name }} numerology-frontend/
+
+      - name: Clone devops-numerology repository
+        run: git clone https://${{ secrets.TRIGGER }}@github.com/GravitinoUp/devops_numerology.git -b ${{ github.ref_name }}
+
+      - name: Copy Dockerfile to frontend directory
+        run: cp devops_numerology/docker_images/frontend/Dockerfile numerology-frontend/
+
+      - name: Import Secrets
+        id: import-secrets
+        uses: hashicorp/vault-action@v3
+        with:
+          url: https://vault.devops.gravitino.ru
+          token: ${{ secrets.VAULT_GITHUB_SECRET }}
+          secrets: |
+            secret/numerology-frontend/dev VITE_API | VITE_API ;
+            secret/numerology-frontend/dev VITE_BASE_URL | VITE_BASE_URL
+
+      - name: Build Docker image
+        run: |
+          cd numerology-frontend/
+          docker build --build-arg VITE_API="${{ env.VITE_API }}" --build-arg VITE_BASE_URL="${{ env.VITE_BASE_URL }}" -t numerology_frontend_${{ github.ref_name }} .
+
+      - name: Docker Login
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u del98 --password-stdin
+
+      - name: Tag Docker image
+        run: docker tag numerology_frontend_${{ github.ref_name }} del98/numerology_frontend_${{ github.ref_name }}:${{ github.sha }}
+
+      - name: Push Docker image
+        run: docker push del98/numerology_frontend_${{ github.ref_name }}:${{ github.sha }}
+
+      - name: Trigger test workflow
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.TRIGGER }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'GravitinoUp',
+              repo: 'devops_numerology',
+              workflow_id: 'frontend_workflow.yml',
+              ref: 'develop',
+              inputs: {
+                imageTag: "${{ github.sha }}"
+              }
+            });
