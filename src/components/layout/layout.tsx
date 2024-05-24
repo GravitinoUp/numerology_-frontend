@@ -6,7 +6,9 @@ import { Navbar } from './navbar'
 export function Layout({ children }: { children?: ReactNode }) {
     return (
         <main
-            className={'min-h-screen grid grid-cols-[250px_auto] bg-[#F8F8F8]'}
+            className={
+                'min-h-screen grid grid-cols-[250px_auto] mobile:grid-cols-[88px_auto] bg-[#F8F8F8]'
+            }
         >
             <div className="col-1">
                 <div className="sticky top-0">

@@ -4,10 +4,7 @@ const Watermark = () => {
     const { t } = useTranslation()
 
     return (
-        <a
-            href="https://gravitino.ru/"
-            className="w-full my-6 text-[#59656A] text-center"
-        >
+        <a href="https://gravitino.ru/" className="text-[#59656A] text-center">
             {t('made.in')}
             <span className="font-bold"> {t('gravitino')}</span>
         </a>

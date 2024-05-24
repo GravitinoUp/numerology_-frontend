@@ -51,7 +51,9 @@ export function Navbar() {
                     )
                 })}
                 <div className="flex-auto" />
-                <Watermark />
+                <div className="w-full my-6 text-center mobile:hidden">
+                    <Watermark />
+                </div>
             </ul>
         </nav>
     )
