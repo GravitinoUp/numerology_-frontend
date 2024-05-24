@@ -6,6 +6,7 @@ export interface CategoryInterface {
     category_name: LocalizationInterface<string>
     category_description: LocalizationInterface<string>
     category_image: string
+    is_active: boolean
 }
 
 export interface CategoryPayloadInterface {
@@ -24,6 +25,7 @@ export interface PageInterface {
     page_image: string
     page_icon: string
     color: string
+    is_active: boolean
 }
 
 export interface PagePayloadInterface {

@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import i18next from 'i18next'
+import { Eye, EyeOff } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
@@ -23,6 +24,8 @@ const authSchema = z.object({
 export default function AuthPage() {
     const { t } = useTranslation()
     const navigate = useNavigate()
+
+    const [passwordShown, setPasswordShown] = useState(false)
 
     const form = useForm({
         schema: authSchema,
@@ -94,6 +97,31 @@ export default function AuthPage() {
                                 label={t('password')}
                                 className="mt-8"
                                 inputClassName="h-14"
+                                type={passwordShown ? 'text' : 'password'}
+                                suffixIcon={
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        className="h-14 px-6 rounded-l-none rounded-r-xl"
+                                        onClick={() =>
+                                            setPasswordShown(!passwordShown)
+                                        }
+                                    >
+                                        {passwordShown ? (
+                                            <Eye
+                                                size={20}
+                                                strokeWidth={2.4}
+                                                color="#00131A"
+                                            />
+                                        ) : (
+                                            <EyeOff
+                                                size={20}
+                                                strokeWidth={2.4}
+                                                color="#00131A"
+                                            />
+                                        )}
+                                    </Button>
+                                }
                                 {...field}
                             />
                         )}

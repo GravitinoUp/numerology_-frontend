@@ -65,6 +65,28 @@ const pagesApi = api.injectEndpoints({
                 body: formData,
             }),
         }),
+        changeCategoryStatus: builder.mutation<
+            FetchResultInterface,
+            Partial<CategoryInterface>
+        >({
+            query: (body) => ({
+                url: 'categories/status',
+                method: 'PATCH',
+                body,
+            }),
+            invalidatesTags: ['Categories'],
+        }),
+        changeSectionStatus: builder.mutation<
+            FetchResultInterface,
+            Partial<PageInterface>
+        >({
+            query: (body) => ({
+                url: 'categories/status',
+                method: 'PATCH',
+                body,
+            }),
+            invalidatesTags: ['Categories'],
+        }),
     }),
 })
 
@@ -76,4 +98,6 @@ export const {
     useUpdatePageMutation,
     useGetFormulasBySectionQuery,
     useUploadFilesMutation,
+    useChangeCategoryStatusMutation,
+    useChangeSectionStatusMutation,
 } = pagesApi

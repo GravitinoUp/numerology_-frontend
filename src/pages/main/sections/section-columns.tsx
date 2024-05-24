@@ -2,6 +2,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import i18next from 'i18next'
 import TableActions from './table-actions'
 import StatusCard from '@/components/status-card/status-card'
+import StatusSwitch from '@/components/status-switch/status-switch'
 import { PageInterface } from '@/types/interface/pages'
 
 export const sectionColumns: ColumnDef<PageInterface>[] = [
@@ -31,7 +32,12 @@ export const sectionColumns: ColumnDef<PageInterface>[] = [
     {
         header: i18next.t('status.title'),
         accessorKey: 'is_active',
-        cell: () => <StatusCard status={true} />,
+        cell: ({ row }) => (
+            <div className="flex gap-4 items-center">
+                <StatusCard status={row.original.is_active} />
+                <StatusSwitch item={row.original} />
+            </div>
+        ),
     },
     {
         header: i18next.t('position'),
