@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import ManageResultForm from './components/manage-result-form'
 import Button from '../../../components/ui/button'
 import EditIcon from '@/assets/icons/edit.svg'
-import TrashIcon from '@/assets/icons/trash.svg'
-import ConfirmForm from '@/components/confirm-form/confirm-form'
+//import TrashIcon from '@/assets/icons/trash.svg'
+//import ConfirmForm from '@/components/confirm-form/confirm-form'
 import DialogWindow from '@/components/dialog-window/dialog-window'
 import { ResultInterface } from '@/types/interface/numbers'
 
@@ -15,13 +15,13 @@ interface TableActionsProps {
 export default function TableActions({ item }: TableActionsProps) {
     const { t } = useTranslation()
 
-    const [open, setOpen] = useState(false)
+    //const [open, setOpen] = useState(false)
     const [manageOpen, setManageOpen] = useState(false)
 
     return (
         <Fragment>
             <div className="flex justify-end gap-2">
-                <DialogWindow
+                {/* <DialogWindow
                     open={open}
                     setOpen={setOpen}
                     trigger={
@@ -47,7 +47,7 @@ export default function TableActions({ item }: TableActionsProps) {
                             onConfirm={() => {}}
                         />
                     }
-                />
+                /> */}
                 <DialogWindow
                     open={manageOpen}
                     setOpen={setManageOpen}

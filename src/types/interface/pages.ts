@@ -1,11 +1,22 @@
 import { LocalizationInterface } from '.'
 import { PageType } from './numbers'
 
+export interface FormattedCategoryInterface {
+    count: number
+    category_id: number
+    category_name: LocalizationInterface<string>
+    category_description: LocalizationInterface<string>
+    category_image: string
+    position: number
+    is_active: boolean
+}
+
 export interface CategoryInterface {
     category_id: number
     category_name: LocalizationInterface<string>
     category_description: LocalizationInterface<string>
     category_image: string
+    position: number
     is_active: boolean
 }
 
@@ -14,6 +25,8 @@ export interface CategoryPayloadInterface {
     category_name: string
     category_description: string
     category_image: string
+    position: number
+    old_position: number
 }
 
 export interface PageInterface {

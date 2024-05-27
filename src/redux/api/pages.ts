@@ -70,7 +70,7 @@ const pagesApi = api.injectEndpoints({
             Partial<CategoryInterface>
         >({
             query: (body) => ({
-                url: 'categories/status',
+                url: 'category/status',
                 method: 'PATCH',
                 body,
             }),
@@ -81,11 +81,11 @@ const pagesApi = api.injectEndpoints({
             Partial<PageInterface>
         >({
             query: (body) => ({
-                url: 'categories/status',
+                url: 'page/status',
                 method: 'PATCH',
                 body,
             }),
-            invalidatesTags: ['Categories'],
+            invalidatesTags: ['Sections'],
         }),
     }),
 })

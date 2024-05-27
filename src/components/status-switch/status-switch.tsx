@@ -34,34 +34,40 @@ export default function StatusSwitch({
         },
     ] = useChangeSectionStatusMutation()
 
-    const updateSuccessMsg = useMemo(
+    const categoryUpdateSuccessMsg = useMemo(
+        () =>
+            t('success.update.f', {
+                type: t('category'),
+            }),
+        []
+    )
+
+    const sectionUpdateSuccessMsg = useMemo(
         () =>
             t('success.update.m', {
-                type: t('user.title'),
+                type: t('section'),
             }),
         []
     )
 
     const updateStatus = () => {
-        if ((item as CategoryInterface).category_id) {
+        if ((item as PageInterface).page_uuid) {
+            const section = item as PageInterface
+            changeSectionStatus({
+                page_uuid: section.page_uuid,
+                is_active: !section.is_active,
+            })
+        } else if ((item as CategoryInterface).category_id) {
             const category = item as CategoryInterface
             changeCategoryStatus({
                 category_id: category.category_id,
                 is_active: !category.is_active,
             })
-        } else if ((item as PageInterface).page_uuid) {
-            const section = item as PageInterface
-            changeSectionStatus({
-                page_uuid: section.category_id,
-                is_active: !section.is_active,
-            })
         }
     }
 
-    useSuccessToast(
-        updateSuccessMsg,
-        categoryUpdateSuccess || sectionUpdateSuccess
-    )
+    useSuccessToast(categoryUpdateSuccessMsg, categoryUpdateSuccess)
+    useSuccessToast(sectionUpdateSuccessMsg, sectionUpdateSuccess)
     useErrorToast(void 0, categoryUpdateError || sectionUpdateError)
 
     return (

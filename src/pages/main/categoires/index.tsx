@@ -16,11 +16,16 @@ export default function CategoriesPage() {
 
     const { data: categories = [], error, refetch } = useGetCategoriesQuery()
 
+    const formattedCategories = categories.map((value) => ({
+        count: categories.length,
+        ...value,
+    }))
+
     return !error ? (
         <PageLayout title={t('page.categories')}>
             <DataTable
                 columns={categoryColumns}
-                data={categories}
+                data={formattedCategories}
                 onRowClick={(data) =>
                     navigate(
                         `${routes.CATEGORIES}/${data.category_id}/sections`

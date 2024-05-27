@@ -3,9 +3,9 @@ import StatusCard from '@/components/status-card/status-card'
 import StatusSwitch from '@/components/status-switch/status-switch'
 import i18next from '@/i18n'
 import TableActions from '@/pages/main/categoires/table-actions'
-import { CategoryInterface } from '@/types/interface/pages'
+import { FormattedCategoryInterface } from '@/types/interface/pages'
 
-export const categoryColumns: ColumnDef<CategoryInterface>[] = [
+export const categoryColumns: ColumnDef<FormattedCategoryInterface>[] = [
     {
         header: i18next.t('name'),
         accessorKey: 'category_name',

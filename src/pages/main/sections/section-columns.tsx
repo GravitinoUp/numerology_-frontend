@@ -30,6 +30,26 @@ export const sectionColumns: ColumnDef<PageInterface>[] = [
         ),
     },
     {
+        header: i18next.t('content'),
+        accessorKey: 'page_description',
+        cell: ({ row }) => (
+            <div data-column-id="page_description" className="max-w-[300px]">
+                <p
+                    data-column-id="page_description"
+                    className="text-wrap break-words line-clamp-1"
+                >
+                    {row.original.page_description.en}
+                </p>
+                <p
+                    data-column-id="page_description"
+                    className="text-wrap break-words line-clamp-1"
+                >
+                    {row.original.page_description.ru}
+                </p>
+            </div>
+        ),
+    },
+    {
         header: i18next.t('status.title'),
         accessorKey: 'is_active',
         cell: ({ row }) => (
@@ -38,10 +58,6 @@ export const sectionColumns: ColumnDef<PageInterface>[] = [
                 <StatusSwitch item={row.original} />
             </div>
         ),
-    },
-    {
-        header: i18next.t('position'),
-        accessorKey: 'position',
     },
     {
         id: 'actions',

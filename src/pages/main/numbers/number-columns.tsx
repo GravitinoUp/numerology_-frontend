@@ -5,6 +5,7 @@ import { ResultInterface } from '@/types/interface/numbers'
 
 export const numberColumns: ColumnDef<ResultInterface>[] = [
     {
+        id: 'key',
         header: i18next.t('key'),
         accessorKey: 'result_keys',
     },
