@@ -1,4 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table'
+import { ProgressiveImage } from '@/components/progressive-image'
 import StatusCard from '@/components/status-card/status-card'
 import StatusSwitch from '@/components/status-switch/status-switch'
 import i18next from '@/i18n'
@@ -14,12 +15,15 @@ export const categoryColumns: ColumnDef<FormattedCategoryInterface>[] = [
                 data-column-id="category_name"
                 className="flex gap-3 items-center"
             >
-                <img
+                <ProgressiveImage
                     data-column-id="category_name"
+                    className="w-10 h-10 rounded-full object-cover"
                     src={`${import.meta.env.VITE_API}${
                         row.original.category_image
                     }`}
-                    className="w-10 h-10 rounded-full object-cover"
+                    width={40}
+                    height={40}
+                    alt=""
                 />
                 <div>
                     <p data-column-id="category_name" className="font-medium">

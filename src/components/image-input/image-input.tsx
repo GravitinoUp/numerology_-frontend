@@ -71,7 +71,7 @@ export function ImageInput({ selectedFile, setSelectedFile }: ImageInputProps) {
                     )}
                     <p>{t('action.select.image')}</p>
                 </div>
-                {selectedFile && (
+                {selectedFile && selectedFile.fileURL != '' && (
                     <Button
                         className="absolute w-10 h-10 bg-muted right-4"
                         type="button"

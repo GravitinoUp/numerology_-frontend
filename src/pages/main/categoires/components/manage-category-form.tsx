@@ -101,7 +101,6 @@ export default function ManageCategoryForm({
         const data = form.getValues()
         if (category) {
             // UPDATE
-
             updateCategory({
                 category_id: category.category_id,
                 category_name: JSON.stringify({
@@ -112,9 +111,11 @@ export default function ManageCategoryForm({
                     ru: data.category_description_ru,
                     en: data.category_description_en,
                 }),
-                category_image: selectedFile?.file
-                    ? uploadedFiles[0]
-                    : category.category_image,
+                category_image: selectedFile
+                    ? selectedFile?.file
+                        ? uploadedFiles[0]
+                        : category.category_image
+                    : '',
                 position: data.category_position,
                 old_position: category.position,
             })

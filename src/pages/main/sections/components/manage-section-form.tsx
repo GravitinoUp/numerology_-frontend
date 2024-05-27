@@ -105,9 +105,11 @@ export default function ManageSectionForm({ section, setOpen }: FormProps) {
                     ru: data.section_description_ru,
                     en: data.section_description_en,
                 }),
-                page_image: selectedFile?.file
-                    ? uploadedFiles[0]
-                    : section.page_image,
+                page_image: selectedFile
+                    ? selectedFile?.file
+                        ? uploadedFiles[0]
+                        : section.page_image
+                    : '',
                 page_icon: section.page_icon,
                 color: section.color,
             })
