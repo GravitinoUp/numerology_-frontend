@@ -35,7 +35,8 @@ const NavbarLink = ({ path, title, children }: NavbarLinkProps) => {
                     <div
                         className={cn(
                             isOnCurrentPath ? 'font-[600]' : 'font-[400]',
-                            'ml-3 font-pop text-[16px] text-[#3F434A] text-start'
+                            'ml-3 text-[16px] text-[#3F434A] text-start',
+                            'mobile:hidden'
                         )}
                     >
                         {title}

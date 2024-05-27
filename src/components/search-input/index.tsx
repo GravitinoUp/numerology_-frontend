@@ -8,7 +8,6 @@ type Props = {
     onChange: (value: string | number) => void
     debounce?: number
     suffixIconClick?: () => void
-    filtersEnabled?: boolean
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>
 
 export const DebouncedInput: React.FC<Props> = ({

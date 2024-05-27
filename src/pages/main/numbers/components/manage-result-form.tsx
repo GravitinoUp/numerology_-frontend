@@ -104,9 +104,11 @@ export default function ManageResultForm({ result, setOpen }: FormProps) {
                     ru: data.result_content_ru,
                     en: data.result_content_en,
                 }),
-                result_image: selectedFile?.file
-                    ? uploadedFiles[0]
-                    : result.result_image,
+                result_image: selectedFile
+                    ? selectedFile?.file
+                        ? uploadedFiles[0]
+                        : result.result_image
+                    : '',
                 result_keys: result.result_keys,
                 formula_type_id: result.formula_type.formula_type_id,
             })

@@ -51,7 +51,6 @@ interface DataTableProps<TData, TValue> {
     searchSuffixIconClick?: () => void
     searchPlaceholder?: string
     columnVisibility?: VisibilityState
-    filtersEnabled?: boolean
     getTableInfo?: (
         pageSize: number,
         pageIndex: number,
@@ -73,7 +72,6 @@ function DataTable<TData, TValue>({
     searchSuffixIconClick,
     searchPlaceholder,
     columnVisibility = {},
-    filtersEnabled,
     getTableInfo: getTableInfo = () => {},
     paginationInfo,
     isLoading,
@@ -131,6 +129,7 @@ function DataTable<TData, TValue>({
         columns: tableColumns,
         state: manualFilters
             ? {
+                  globalFilter,
                   columnFilters,
                   columnVisibility,
                   rowSelection,
@@ -152,6 +151,7 @@ function DataTable<TData, TValue>({
             paginationInfo.itemCount / paginationInfo.pageSize
         ),
         onColumnFiltersChange: setColumnFilters,
+        onGlobalFilterChange: setGlobalFilter,
         onRowSelectionChange: setRowSelection,
         getPaginationRowModel: getPaginationRowModel(),
         getCoreRowModel: getCoreRowModel(),
@@ -160,8 +160,6 @@ function DataTable<TData, TValue>({
     })
 
     useEffect(() => {
-        console.log(table.getState().pagination.pageSize)
-
         getTableInfo(
             table.getState().pagination.pageSize,
             table.getState().pagination.pageIndex,
@@ -195,7 +193,6 @@ function DataTable<TData, TValue>({
                     placeholder={searchPlaceholder}
                     onChange={(value) => setGlobalFilter(String(value))}
                     suffixIconClick={searchSuffixIconClick}
-                    filtersEnabled={filtersEnabled}
                 />
                 <Select
                     value={String(paginationInfo.pageSize)}

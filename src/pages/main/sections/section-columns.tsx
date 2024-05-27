@@ -1,7 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table'
 import i18next from 'i18next'
 import TableActions from './table-actions'
+import { ProgressiveImage } from '@/components/progressive-image'
 import StatusCard from '@/components/status-card/status-card'
+import StatusSwitch from '@/components/status-switch/status-switch'
 import { PageInterface } from '@/types/interface/pages'
 
 export const sectionColumns: ColumnDef<PageInterface>[] = [
@@ -10,12 +12,15 @@ export const sectionColumns: ColumnDef<PageInterface>[] = [
         accessorKey: 'page_name',
         cell: ({ row }) => (
             <div data-column-id="page_name" className="flex gap-3 items-center">
-                <img
+                <ProgressiveImage
                     data-column-id="page_name"
+                    className="w-10 h-10 rounded-full object-cover"
                     src={`${import.meta.env.VITE_API}${
                         row.original.page_image
                     }`}
-                    className="w-10 h-10 rounded-full object-cover"
+                    width={40}
+                    height={40}
+                    alt=""
                 />
                 <div data-column-id="page_name">
                     <p data-column-id="page_name" className="font-medium">
@@ -29,13 +34,34 @@ export const sectionColumns: ColumnDef<PageInterface>[] = [
         ),
     },
     {
-        header: i18next.t('status.title'),
-        accessorKey: 'is_active',
-        cell: () => <StatusCard status={true} />,
+        header: i18next.t('content'),
+        accessorKey: 'page_description',
+        cell: ({ row }) => (
+            <div data-column-id="page_description" className="max-w-[300px]">
+                <p
+                    data-column-id="page_description"
+                    className="text-wrap break-words line-clamp-1"
+                >
+                    {row.original.page_description.en}
+                </p>
+                <p
+                    data-column-id="page_description"
+                    className="text-wrap break-words line-clamp-1"
+                >
+                    {row.original.page_description.ru}
+                </p>
+            </div>
+        ),
     },
     {
-        header: i18next.t('position'),
-        accessorKey: 'position',
+        header: i18next.t('status.title'),
+        accessorKey: 'is_active',
+        cell: ({ row }) => (
+            <div data-column-id="is_active" className="flex gap-4 items-center">
+                <StatusCard status={row.original.is_active} />
+                <StatusSwitch item={row.original} />
+            </div>
+        ),
     },
     {
         id: 'actions',

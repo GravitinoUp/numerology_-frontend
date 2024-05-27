@@ -3,25 +3,25 @@ import { useTranslation } from 'react-i18next'
 import ManageCategoryForm from './components/manage-category-form'
 import Button from '../../../components/ui/button'
 import EditIcon from '@/assets/icons/edit.svg'
-import TrashIcon from '@/assets/icons/trash.svg'
-import ConfirmForm from '@/components/confirm-form/confirm-form'
+//import TrashIcon from '@/assets/icons/trash.svg'
+//import ConfirmForm from '@/components/confirm-form/confirm-form'
 import DialogWindow from '@/components/dialog-window/dialog-window'
-import { CategoryInterface } from '@/types/interface/pages'
+import { FormattedCategoryInterface } from '@/types/interface/pages'
 
 interface TableActionsProps {
-    item: CategoryInterface
+    item: FormattedCategoryInterface
 }
 
 export default function TableActions({ item }: TableActionsProps) {
     const { t } = useTranslation()
 
-    const [open, setOpen] = useState(false)
+    //const [open, setOpen] = useState(false)
     const [manageOpen, setManageOpen] = useState(false)
 
     return (
         <Fragment>
             <div className="flex justify-end gap-2">
-                <DialogWindow
+                {/* <DialogWindow
                     open={open}
                     setOpen={setOpen}
                     trigger={
@@ -48,7 +48,7 @@ export default function TableActions({ item }: TableActionsProps) {
                             onConfirm={() => {}}
                         />
                     }
-                />
+                /> */}
                 <DialogWindow
                     open={manageOpen}
                     setOpen={setManageOpen}
@@ -70,6 +70,7 @@ export default function TableActions({ item }: TableActionsProps) {
                         <ManageCategoryForm
                             setOpen={setManageOpen}
                             category={item}
+                            count={item.count}
                         />
                     }
                     size="md"

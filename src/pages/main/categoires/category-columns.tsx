@@ -1,10 +1,12 @@
 import { ColumnDef } from '@tanstack/react-table'
+import { ProgressiveImage } from '@/components/progressive-image'
 import StatusCard from '@/components/status-card/status-card'
+import StatusSwitch from '@/components/status-switch/status-switch'
 import i18next from '@/i18n'
 import TableActions from '@/pages/main/categoires/table-actions'
-import { CategoryInterface } from '@/types/interface/pages'
+import { FormattedCategoryInterface } from '@/types/interface/pages'
 
-export const categoryColumns: ColumnDef<CategoryInterface>[] = [
+export const categoryColumns: ColumnDef<FormattedCategoryInterface>[] = [
     {
         header: i18next.t('name'),
         accessorKey: 'category_name',
@@ -13,12 +15,15 @@ export const categoryColumns: ColumnDef<CategoryInterface>[] = [
                 data-column-id="category_name"
                 className="flex gap-3 items-center"
             >
-                <img
+                <ProgressiveImage
                     data-column-id="category_name"
+                    className="w-10 h-10 rounded-full object-cover"
                     src={`${import.meta.env.VITE_API}${
                         row.original.category_image
                     }`}
-                    className="w-10 h-10 rounded-full object-cover"
+                    width={40}
+                    height={40}
+                    alt=""
                 />
                 <div>
                     <p data-column-id="category_name" className="font-medium">
@@ -34,7 +39,12 @@ export const categoryColumns: ColumnDef<CategoryInterface>[] = [
     {
         header: i18next.t('status.title'),
         accessorKey: 'is_active',
-        cell: () => <StatusCard status={true} />,
+        cell: ({ row }) => (
+            <div data-column-id="is_active" className="flex gap-4 items-center">
+                <StatusCard status={row.original.is_active} />
+                <StatusSwitch item={row.original} />
+            </div>
+        ),
     },
     {
         header: i18next.t('position'),

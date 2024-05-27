@@ -29,10 +29,15 @@ const categorySchema = z.object({
 
 interface FormProps {
     category?: CategoryInterface
+    count: number
     setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export default function ManageCategoryForm({ category, setOpen }: FormProps) {
+export default function ManageCategoryForm({
+    category,
+    count,
+    setOpen,
+}: FormProps) {
     const { t } = useTranslation()
 
     const form = useForm({
@@ -43,7 +48,7 @@ export default function ManageCategoryForm({ category, setOpen }: FormProps) {
                   category_name_en: category.category_name.en,
                   category_description_ru: category.category_description.ru,
                   category_description_en: category.category_description.en,
-                  category_position: 1,
+                  category_position: category.position,
               }
             : {
                   category_name_ru: '',
@@ -96,7 +101,6 @@ export default function ManageCategoryForm({ category, setOpen }: FormProps) {
         const data = form.getValues()
         if (category) {
             // UPDATE
-
             updateCategory({
                 category_id: category.category_id,
                 category_name: JSON.stringify({
@@ -107,9 +111,13 @@ export default function ManageCategoryForm({ category, setOpen }: FormProps) {
                     ru: data.category_description_ru,
                     en: data.category_description_en,
                 }),
-                category_image: selectedFile?.file
-                    ? uploadedFiles[0]
-                    : category.category_image,
+                category_image: selectedFile
+                    ? selectedFile?.file
+                        ? uploadedFiles[0]
+                        : category.category_image
+                    : '',
+                position: data.category_position,
+                old_position: category.position,
             })
         } else {
             // CREATE
@@ -191,7 +199,13 @@ export default function ManageCategoryForm({ category, setOpen }: FormProps) {
                                     setSelectedValue={(value) =>
                                         field.onChange(value !== '' ? value : 0)
                                     }
-                                    items={[{ value: 0, label: '1' }]}
+                                    items={Array.from(
+                                        { length: count },
+                                        (_, i) => ({
+                                            label: String(i + 1),
+                                            value: i + 1,
+                                        })
+                                    )}
                                 />
                             </FormItem>
                         )}

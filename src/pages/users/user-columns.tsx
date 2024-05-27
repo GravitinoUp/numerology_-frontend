@@ -27,7 +27,7 @@ export const userColumns: ColumnDef<FormattedUserInterface>[] = [
         header: i18next.t('status.title'),
         accessorKey: 'is_active',
         cell: ({ row }) => (
-            <div className="flex gap-4 items-center">
+            <div data-column-id="is_active" className="flex gap-4 items-center">
                 <StatusCard status={row.original.is_active} />
                 <UserSwitch user={row.original} />
             </div>

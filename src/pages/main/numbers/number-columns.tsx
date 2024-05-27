@@ -1,10 +1,12 @@
 import { ColumnDef } from '@tanstack/react-table'
 import i18next from 'i18next'
 import TableActions from './table-actions'
+import { ProgressiveImage } from '@/components/progressive-image'
 import { ResultInterface } from '@/types/interface/numbers'
 
 export const numberColumns: ColumnDef<ResultInterface>[] = [
     {
+        id: 'key',
         header: i18next.t('key'),
         accessorKey: 'result_keys',
     },
@@ -13,11 +15,14 @@ export const numberColumns: ColumnDef<ResultInterface>[] = [
         accessorKey: 'result_name',
         cell: ({ row }) => (
             <div className="flex gap-3 items-center">
-                <img
+                <ProgressiveImage
+                    className="w-10 h-10 rounded-full object-cover"
                     src={`${import.meta.env.VITE_API}${
                         row.original.result_image
                     }`}
-                    className="w-10 h-10 rounded-full object-cover"
+                    width={40}
+                    height={40}
+                    alt=""
                 />
                 <div>
                     <p className="font-medium">{row.original.result_name.en}</p>
