@@ -32,7 +32,7 @@ function App() {
 
     useEffect(() => {
         if (isSuccess) {
-            setCookieValue('accessToken', newAccessToken)
+            setCookieValue('accessToken', newAccessToken, '43200')
 
             if (path.pathname === routes.AUTH_PAGE || path.pathname === '/') {
                 navigate(routes.CATEGORIES)

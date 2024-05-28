@@ -6,7 +6,12 @@ import CustomForm, { useForm } from '@/components/form/form'
 import { ImageInput } from '@/components/image-input/image-input'
 import { InputField } from '@/components/input-field/input-field'
 import Button from '@/components/ui/button'
-import { FormField, FormItem, FormLabel } from '@/components/ui/form'
+import {
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Textarea } from '@/components/ui/textarea'
 import { useErrorToast } from '@/hooks/use-error-toast'
@@ -194,7 +199,7 @@ export default function ManageCategoryForm({
                             <FormItem>
                                 <FormLabel>{t('position')}</FormLabel>
                                 <CustomSelect
-                                    placeholder={'1'}
+                                    placeholder={t('select.position')}
                                     selectedValue={field.value}
                                     setSelectedValue={(value) =>
                                         field.onChange(value !== '' ? value : 0)
@@ -207,6 +212,7 @@ export default function ManageCategoryForm({
                                         })
                                     )}
                                 />
+                                <FormMessage />
                             </FormItem>
                         )}
                     />

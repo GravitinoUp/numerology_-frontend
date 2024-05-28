@@ -43,8 +43,8 @@ export default function AuthPage() {
 
     useEffect(() => {
         if (isSuccess) {
-            setCookieValue('accessToken', data.accessToken!)
-            setCookieValue('refreshToken', data.refreshToken!)
+            setCookieValue('accessToken', data.accessToken!, '43200')
+            setCookieValue('refreshToken', data.refreshToken!, '')
 
             navigate(routes.CATEGORIES)
         }

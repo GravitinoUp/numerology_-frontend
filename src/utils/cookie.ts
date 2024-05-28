@@ -14,8 +14,10 @@ export const getCookieValue = (key: string) =>
         .find((row) => row.startsWith(`${key}=`))
         ?.split('=')[1]
 
-export const setCookieValue = (key: string, value: string) =>
-    (document.cookie = `${key}=${value}; Max-Age=43200; Path=/`)
+export const setCookieValue = (key: string, value: string, lifetime: string) =>
+    (document.cookie = `${key}=${value}${
+        lifetime !== '' ? `; Max-Age=${lifetime}` : ''
+    }; Path=/`)
 
 export const removeCookieValue = (key: string) => {
     document.cookie = `${key}=; Max-Age=-1; Path=/`
