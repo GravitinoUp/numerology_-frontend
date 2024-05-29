@@ -34,7 +34,6 @@ export const api = createApi({
                     if (response.ok) {
                         const newAccessToken = await response.text()
                         setCookieValue('accessToken', newAccessToken, '43200')
-                        //document.cookie = `accessToken=${newAccessToken}; Max-Age=43200`
                         headers.set('Authorization', `Bearer ${newAccessToken}`)
                     }
                 }
@@ -43,6 +42,6 @@ export const api = createApi({
             return headers
         },
     }),
-    tagTypes: ['Categories', 'Sections', 'Numbers', 'Users'],
+    tagTypes: ['Categories', 'Sections', 'Numbers', 'Users', 'User'],
     endpoints: () => ({}),
 })

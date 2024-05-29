@@ -26,7 +26,7 @@ const usersApi = api.injectEndpoints({
                 url: 'users',
                 method: 'GET',
             }),
-            providesTags: ['Users'],
+            providesTags: ['User'],
         }),
         createUser: builder.mutation<
             FetchResultInterface,
@@ -37,6 +37,7 @@ const usersApi = api.injectEndpoints({
                 method: 'POST',
                 body,
             }),
+            invalidatesTags: ['Users'],
         }),
         updateUser: builder.mutation<
             FetchResultInterface,

@@ -6,6 +6,7 @@ import StatusCard from '@/components/status-card/status-card'
 export interface FormattedUserInterface {
     user_uuid: string
     fio: string
+    phone: string
     role: string
     is_active: boolean
 }
@@ -18,6 +19,10 @@ export const userColumns: ColumnDef<FormattedUserInterface>[] = [
     {
         header: i18next.t('user.fio'),
         accessorKey: 'fio',
+    },
+    {
+        header: i18next.t('phone'),
+        accessorKey: 'phone',
     },
     {
         header: i18next.t('user.role'),
