@@ -47,6 +47,8 @@ export default function SettingsPage() {
 
         if (refreshToken) {
             logout({ refresh_token: refreshToken! })
+        } else {
+            navigate(routes.AUTH_PAGE, { replace: true })
         }
 
         removeCookieValue('accessToken')
