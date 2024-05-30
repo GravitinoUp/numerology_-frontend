@@ -37,8 +37,11 @@ jobs:
           cd numerology-frontend/
           docker build --build-arg VITE_API="${{ env.VITE_API }}" --build-arg VITE_BASE_URL="${{ env.VITE_BASE_URL }}" -t numerology_frontend_${{ github.ref_name }} .
 
-      - name: Docker Login
-        run: docker login --username json_key --password ${{ secrets.DOCKER_PASSWORD }} cr.yandex
+      - name: Login to Yandex Cloud Container Registry
+        id: login-cr
+        uses: yc-actions/yc-cr-login@v2
+        with:
+          yc-sa-json-credentials: ${{ secrets.DOCKER_PASSWORD }}        
 
       - name: Tag Docker image
         run: docker tag numerology_frontend_${{ github.ref_name }} cr.yandex/crpi5naitl8bfj04abju/numerology_frontend_${{ github.ref_name }}:${{ github.sha }}
