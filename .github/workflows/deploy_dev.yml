@@ -39,7 +39,7 @@ jobs:
 
       - name: Docker Login
         run: |
-          echo ${{ secrets.DOCKER_PASSWORD }} > key.json
+          echo "${{ secrets.DOCKER_PASSWORD }}" > key.json
           cat key.json | docker login --username json_key --password-stdin cr.yandex
 
       - name: Tag Docker image
