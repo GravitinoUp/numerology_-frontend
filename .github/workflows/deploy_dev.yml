@@ -38,13 +38,13 @@ jobs:
           docker build --build-arg VITE_API="${{ env.VITE_API }}" --build-arg VITE_BASE_URL="${{ env.VITE_BASE_URL }}" -t numerology_frontend_${{ github.ref_name }} .
 
       - name: Docker Login
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u del98 --password-stdin
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u json_key --password-stdin cr.yandex
 
       - name: Tag Docker image
-        run: docker tag numerology_frontend_${{ github.ref_name }} del98/numerology_frontend_${{ github.ref_name }}:${{ github.sha }}
+        run: docker tag numerology_frontend_${{ github.ref_name }} cr.yandex/crpi5naitl8bfj04abju/numerology_frontend_${{ github.ref_name }}:${{ github.sha }}
 
       - name: Push Docker image
-        run: docker push del98/numerology_frontend_${{ github.ref_name }}:${{ github.sha }}
+        run: docker push cr.yandex/crpi5naitl8bfj04abju/numerology_frontend_${{ github.ref_name }}:${{ github.sha }}
 
       - name: Trigger test workflow
         uses: actions/github-script@v5
