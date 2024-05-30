@@ -16,7 +16,7 @@ jobs:
       - name: Clone frontend repository
         run: git clone https://${{ secrets.TRIGGER }}@github.com/GravitinoUp/numerology_frontend.git -b ${{ github.ref_name }} numerology-frontend/
 
-      - name: Clone devops-numerology repository
+      - name: Clone devops_numerology repository
         run: git clone https://${{ secrets.TRIGGER }}@github.com/GravitinoUp/devops_numerology.git -b ${{ github.ref_name }}
 
       - name: Copy Dockerfile to frontend directory
