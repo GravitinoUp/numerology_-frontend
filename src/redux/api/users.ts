@@ -70,6 +70,14 @@ const usersApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Users'],
         }),
+        deactivateUser: builder.mutation<FetchResultInterface, void>({
+            query: (body) => ({
+                url: 'users/my',
+                method: 'DELETE',
+                body,
+            }),
+            invalidatesTags: ['User'],
+        }),
     }),
 })
 
@@ -80,4 +88,5 @@ export const {
     useUpdateUserMutation,
     useCheckUserExistsMutation,
     useChangeUserStatusMutation,
+    useDeactivateUserMutation,
 } = usersApi

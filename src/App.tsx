@@ -9,6 +9,8 @@ import FormulasPage from './pages/main/formulas'
 import NumbersPage from './pages/main/numbers'
 import SectionsPage from './pages/main/sections'
 import SettingsPage from './pages/settings'
+import DeactivatePage from './pages/settings/deactivate'
+import DeactivateInfoPage from './pages/settings/deactivate-info'
 import UsersPage from './pages/users'
 import { useRefreshTokenMutation } from './redux/api/auth'
 import { getJWTtokens, setCookieValue } from './utils/cookie'
@@ -26,7 +28,9 @@ function App() {
         if (refreshToken) {
             fetchRefresh({ refresh_token: `${refreshToken}` })
         } else if (!accessToken) {
-            navigate(routes.AUTH_PAGE)
+            if (path.pathname !== routes.DEACTIVATE_INFO) {
+                navigate(routes.AUTH_PAGE)
+            }
         }
     }, [])
 
@@ -42,7 +46,9 @@ function App() {
 
     useEffect(() => {
         if (error) {
-            navigate(routes.AUTH_PAGE)
+            if (path.pathname !== routes.DEACTIVATE_INFO) {
+                navigate(routes.AUTH_PAGE)
+            }
         }
     }, [error])
 
@@ -61,6 +67,11 @@ function App() {
                     <Route path={routes.SETTINGS} element={<SettingsPage />} />
                 </Route>
                 <Route path={routes.AUTH_PAGE} element={<AuthPage />} />
+                <Route path={routes.DEACTIVATE} element={<DeactivatePage />} />
+                <Route
+                    path={routes.DEACTIVATE_INFO}
+                    element={<DeactivateInfoPage />}
+                />
             </Routes>
         </Suspense>
     )

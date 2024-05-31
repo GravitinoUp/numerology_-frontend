@@ -82,6 +82,19 @@ export default function SettingsPage() {
                         <SettingsField label={t('user.role')}>
                             <SettingsData data={user.role.role_name} />
                         </SettingsField>
+                        <div className="flex h-[90px] justify-between items-center px-10 border-b">
+                            <p className="font-bold">
+                                {t('settings.account.deactivate')}
+                            </p>
+                            <Button
+                                className="px-10 text-red-500 hover:text-red-700"
+                                variant="ghost"
+                                type="button"
+                                onClick={() => navigate(routes.DEACTIVATE)}
+                            >
+                                {t('action.deactivate')}
+                            </Button>
+                        </div>
                         <DialogWindow
                             open={confirmOpen}
                             setOpen={setConfirmOpen}

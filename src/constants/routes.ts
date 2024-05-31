@@ -7,4 +7,6 @@ export const routes = {
     NUMBERS: '/categories/:category/sections/:section/:type',
     USERS: '/users',
     SETTINGS: '/settings',
+    DEACTIVATE: '/deactivate',
+    DEACTIVATE_INFO: '/deactivate-info',
 }
