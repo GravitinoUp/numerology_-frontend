@@ -10,8 +10,10 @@ import { InputField } from '@/components/input-field/input-field'
 import Button from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { FormField } from '@/components/ui/form'
+import { roles } from '@/constants'
 import { routes } from '@/constants/routes'
 import { useAuthMutation } from '@/redux/api/auth'
+import { useGetCurrentUserQuery } from '@/redux/api/users'
 import { ErrorInterface } from '@/types/interface'
 import { setCookieValue } from '@/utils/cookie'
 
@@ -32,6 +34,11 @@ export default function AuthPage() {
         defaultValues: { phone: '', password: '', remember_me: false },
     })
 
+    const {
+        data: user,
+        isSuccess: userSuccess,
+        refetch: refetchUser,
+    } = useGetCurrentUserQuery()
     const [authUser, { data, error, isSuccess, isLoading }] = useAuthMutation()
 
     const onSubmit = (authData: z.infer<typeof authSchema>) => {
@@ -46,9 +53,19 @@ export default function AuthPage() {
             setCookieValue('accessToken', data.accessToken!, '43200')
             setCookieValue('refreshToken', data.refreshToken!, '')
 
-            navigate(routes.CATEGORIES)
+            refetchUser()
         }
     }, [isSuccess])
+
+    useEffect(() => {
+        if (userSuccess) {
+            if (user.role.role_id === roles.admin) {
+                navigate(routes.CATEGORIES, { replace: true })
+            } else {
+                navigate(routes.SETTINGS, { replace: true })
+            }
+        }
+    }, [userSuccess])
 
     useEffect(() => {
         if (error) {

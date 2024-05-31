@@ -2,6 +2,7 @@ import { Suspense, useEffect } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { Layout } from './components/layout/layout'
 import { PageLoader } from './components/loaders/page-loader'
+import { roles } from './constants'
 import { routes } from './constants/routes'
 import AuthPage from './pages/auth'
 import CategoriesPage from './pages/main/categoires'
@@ -13,12 +14,18 @@ import DeactivatePage from './pages/settings/deactivate'
 import DeactivateInfoPage from './pages/settings/deactivate-info'
 import UsersPage from './pages/users'
 import { useRefreshTokenMutation } from './redux/api/auth'
+import { useGetCurrentUserQuery } from './redux/api/users'
 import { getJWTtokens, setCookieValue } from './utils/cookie'
 
 function App() {
     const navigate = useNavigate()
     const path = useLocation()
 
+    const {
+        data: user,
+        isSuccess: userSuccess,
+        refetch: refetchUser,
+    } = useGetCurrentUserQuery()
     const [fetchRefresh, { data: newAccessToken, error, isSuccess }] =
         useRefreshTokenMutation()
 
@@ -38,11 +45,29 @@ function App() {
         if (isSuccess) {
             setCookieValue('accessToken', newAccessToken, '43200')
 
-            if (path.pathname === routes.AUTH_PAGE || path.pathname === '/') {
-                navigate(routes.CATEGORIES)
-            }
+            refetchUser()
         }
     }, [isSuccess])
+
+    useEffect(() => {
+        if (userSuccess) {
+            if (user.role.role_id === roles.admin) {
+                if (
+                    path.pathname === routes.AUTH_PAGE ||
+                    path.pathname === '/'
+                ) {
+                    navigate(routes.CATEGORIES, { replace: true })
+                }
+            } else {
+                if (
+                    path.pathname !== routes.DEACTIVATE &&
+                    path.pathname !== routes.DEACTIVATE_INFO
+                ) {
+                    navigate(routes.SETTINGS, { replace: true })
+                }
+            }
+        }
+    }, [userSuccess])
 
     useEffect(() => {
         if (error) {
