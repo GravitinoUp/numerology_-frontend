@@ -24,6 +24,7 @@ export default function UsersPage() {
             value.person.first_name,
             value.person.patronymic
         ),
+        phone: value.phone,
         role: value.role.role_name,
         is_active: value.is_active,
     }))

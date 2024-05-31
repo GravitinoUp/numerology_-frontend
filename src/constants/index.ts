@@ -23,3 +23,8 @@ export const defaultQueryWithPeriod = {
         date_end: formatISO(new Date(), { representation: 'date' }),
     },
 }
+
+export const roles = {
+    user: 1,
+    admin: 2,
+}
