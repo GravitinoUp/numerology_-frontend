@@ -22,13 +22,11 @@ export default function DeactivateInfoPage() {
                     {t('deactivate.info.description')}
                 </p>
                 <ul className="list-decimal">
-                    <li>Войти в аккаунт</li>
-                    <li>Перейти на вкладку Настройки</li>
-                    <li>
-                        Нажать кнопку Деактивировать аккаунт в поле Деактивация
-                        аккаунта
-                    </li>
-                    <li>Следовать дальнейшей инструкции на экране</li>
+                    <li>{t('deactivate.steps.1')}</li>
+                    <li>{t('deactivate.steps.2')}</li>
+                    <li>{t('deactivate.steps.3')}</li>
+                    <li>{t('deactivate.steps.4')}</li>
+                    <li>{t('deactivate.steps.5')}</li>
                 </ul>
             </div>
         </div>

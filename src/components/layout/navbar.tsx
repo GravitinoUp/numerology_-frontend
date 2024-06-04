@@ -4,7 +4,9 @@ import DashboardIcon from '@/assets/icons/dashboard.svg'
 import Logo from '@/assets/icons/logo.svg'
 import SettingsIcon from '@/assets/icons/settings.svg'
 import UsersIcon from '@/assets/icons/users.svg'
+import { roles } from '@/constants'
 import { routes } from '@/constants/routes'
+import { useGetCurrentUserQuery } from '@/redux/api/users'
 
 interface SingleLink {
     path: string
@@ -13,17 +15,27 @@ interface SingleLink {
 }
 
 export function Navbar() {
+    const {
+        data: user,
+        isFetching: userFetching,
+        isSuccess: userSuccess,
+    } = useGetCurrentUserQuery()
+
+    const successLoad = !userFetching && userSuccess
+
     const links: (SingleLink | false)[] = [
-        {
-            path: routes.CATEGORIES,
-            title: 'Категории',
-            children: <DashboardIcon />,
-        },
-        {
-            path: routes.USERS,
-            title: 'Пользователи',
-            children: <UsersIcon />,
-        },
+        successLoad &&
+            user.role.role_id === roles.admin && {
+                path: routes.CATEGORIES,
+                title: 'Категории',
+                children: <DashboardIcon />,
+            },
+        successLoad &&
+            user.role.role_id === roles.admin && {
+                path: routes.USERS,
+                title: 'Пользователи',
+                children: <UsersIcon />,
+            },
         {
             path: routes.SETTINGS,
             title: 'Настройки',

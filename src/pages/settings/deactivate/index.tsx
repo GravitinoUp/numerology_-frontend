@@ -12,6 +12,7 @@ import { FormField } from '@/components/ui/form'
 import { routes } from '@/constants/routes'
 import { useDeactivateUserMutation } from '@/redux/api/users'
 import { ErrorInterface } from '@/types/interface'
+import { removeCookieValue } from '@/utils/cookie'
 
 const deactivateSchema = z.object({
     password: z.string().min(1, i18next.t('error.required')),
@@ -31,13 +32,16 @@ export default function DeactivatePage() {
 
     const [passwordShown, setPasswordShown] = useState(false)
 
-    const onSubmit = () => {
-        deactivateUser()
+    const onSubmit = (data: z.infer<typeof deactivateSchema>) => {
+        deactivateUser(data)
     }
 
     useEffect(() => {
         if (isSuccess) {
-            navigate(routes.AUTH_PAGE)
+            removeCookieValue('accessToken')
+            removeCookieValue('refreshToken')
+
+            navigate(routes.AUTH_PAGE, { replace: true })
         }
     }, [isSuccess])
 
