@@ -71,7 +71,10 @@ const usersApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Users'],
         }),
-        deactivateUser: builder.mutation<FetchResultInterface, void>({
+        deactivateUser: builder.mutation<
+            FetchResultInterface,
+            { password: string }
+        >({
             query: (body) => ({
                 url: 'users/my',
                 method: 'DELETE',

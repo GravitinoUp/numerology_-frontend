@@ -32,8 +32,8 @@ export default function DeactivatePage() {
 
     const [passwordShown, setPasswordShown] = useState(false)
 
-    const onSubmit = () => {
-        deactivateUser()
+    const onSubmit = (data: z.infer<typeof deactivateSchema>) => {
+        deactivateUser(data)
     }
 
     useEffect(() => {
